@@ -1,0 +1,32 @@
+games to make:
+bomberman
+centipede
+xonix
+blastball
+chase
+sortwars
+guerre
+scissor
+orbit
+artillery
+obwalt
+redistribution
+frog
+pong
+jumpwars
+skrimish
+ufohunt
+riverraid
+keepball
+hitandrun
+boas
+
+things to do:
+support compilation as a single binary
+add mouse support to games that don't have it
+fix revenge's bugs
+start AI games as super stupid
+make fisher work in smaller screens, change the color scheme
+imporve redsquare gameplay (adding complicated score, not going to next level when you lose)
+reorder the games in the menu so that the funner games come first, and noobs don't get lost trying to win sudoku
+
