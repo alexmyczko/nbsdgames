@@ -302,7 +302,7 @@ double posadvantage(byte side){
 	return adv;
 }
 //the AI algorithm
-double decide(byte side,byte depth,byte s){//s is the type of move, it doesn't stand for anything
+double decide(byte side,byte depth,byte movetype){
 	byte fj=forced_jump(side);//only one legal jump if returns 1
 	byte nextturn;
 
@@ -325,14 +325,14 @@ double decide(byte side,byte depth,byte s){//s is the type of move, it doesn't s
 	bool canmove=0;
 	
 	byte nexts ;
-	if(s == IMAGINARY || s == NORMAL )
+	if(movetype == IMAGINARY || movetype == NORMAL )
 		nexts=IMAGINARY;
 	else
 		nexts=ALT_IMG;
 
 	for(y=0;y<8;++y){
 		for(x=0;x<8;++x){
-			if(fj && (s==NORMAL || s==ALT_NRM) && jumpagainy>=0 && (jumpagainy!=y || jumpagainx!=x) )
+			if(fj && (movetype==NORMAL || movetype==ALT_NRM) && jumpagainy>=0 && (jumpagainy!=y || jumpagainx!=x) )
 				continue;
 			if(game[y][x]*side>0){
 				canmove=0;
@@ -355,10 +355,10 @@ double decide(byte side,byte depth,byte s){//s is the type of move, it doesn't s
 							didking=king(toy,tox);
 							
 							//see the advantage you get
-							if(fj==1 && (s==ALT_NRM || s==NORMAL) )
+							if(fj==1 && (movetype==ALT_NRM || movetype==NORMAL) )
 								adv= DOESNT_MATTER;//you have to do the move anyway
 							else if(!depth){
-								if(s==IMAGINARY || s==NORMAL)//calculating advantage only based on numerical superiority
+								if(movetype==IMAGINARY || movetype==NORMAL)//calculating advantage only based on numerical superiority
 									adv=advantage(side);
 								else
 									adv=posadvantage(side);//taking to account the position of the pieces
@@ -402,8 +402,8 @@ double decide(byte side,byte depth,byte s){//s is the type of move, it doesn't s
 		}
 	}
 	EndLoop:
-	if( (s==NORMAL || s==ALT_NRM) && besty >= 0 ){
-		if(endgame && fj!=1 && s==NORMAL && bestadv==wrstadv ){//the algorithm is not given enough depth to determine which move is better
+	if( (movetype==NORMAL || movetype==ALT_NRM) && besty >= 0 ){
+		if(endgame && fj!=1 && movetype==NORMAL && bestadv==wrstadv ){//the algorithm is not given enough depth to determine which move is better
 			if(wrstadv == WIN){//the randomization in the algorithm may cause an illusion of an inevitable win in several moves
 				if(depth > 1)
 					decide(side,depth-1,NORMAL);
