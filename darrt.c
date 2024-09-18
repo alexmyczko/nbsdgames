@@ -44,6 +44,7 @@ typedef struct aim{
 	float y,x;
 	float angle;
 	float v;
+	float vy,vx;
 	byte brake;
 	bool visible;
 }aim;
@@ -80,6 +81,8 @@ void fill_aims(){
 		aims[i].x= randint(0,HWID);
 		aims[i].angle=randint(0,628)/100;
 		aims[i].v=1;
+		aims[i].vy=aims[i].v*sin(aims[i].angle);
+		aims[i].vx=aims[i].v*cos(aims[i].angle);
 		aims[i].sign='A'+i;
 		aims[i].brake=0;
 		aims[i].visible=1;
@@ -130,8 +133,7 @@ void move_aim(aim *a){
 	else if(a->brake>0){
 		--a->brake;
 	}
-	bool bounce;
-	bounce=0;
+	bool bounce=0;
 
 	//bounce when hitting the borders, and don't get stuck there
 	if(a->x<0 || (int)a->x>=WID-1 || ((int)a->x==13 && a->y<=7 ) ){
@@ -160,10 +162,13 @@ void move_aim(aim *a){
 	while(a->angle<0){//preventing overflow
 		a->angle +=M_PI*2;
 	}
-	
+	if(bounce){
+		a->vy=sin(a->angle)*a->v;
+		a->vx=cos(a->angle)*a->v;
+	}
 	//move
-	a->x+=cos(a->angle)*a->v;
-	a->y+=sin(a->angle)*a->v;
+	a->y+=a->vy;
+	a->x+=a->vx;
 
 
 	if(bounce && a->x>=WID-1)//getting unstuck
@@ -173,6 +178,8 @@ void move_aim(aim *a){
 	
 	if(bounce){//bounce in a slightly different direction than it should be
 		a->angle +=randint(-1,1)*0.1;
+		a->vy=sin(a->angle)*a->v;
+		a->vx=cos(a->angle)*a->v;
 	}
 	if(a->x<13 && a->y<7){// don't go into the logo area
 		if(13 - a->x < 7 - a->y){
@@ -236,7 +243,7 @@ void draw(){
 	}
 
 	logo();
-	mvprintw(5,0,"Score: %d",score);
+	mvprintw(5,0,"Score: %ld",score);
 	mvprintw(6,0,"Shots: %d",shots);
 	for(byte i=0;i<SHOTS_WHEN_STARTING-aims_to_stop;++i){
 		draw_aim(landed_aims[i]);
@@ -258,7 +265,7 @@ void end_scene(){
 	}
 
 	logo();
-	mvprintw(5,0,"Score: %d",score);
+	mvprintw(5,0,"Score: %ld",score);
 	for(byte i=0;i<SHOTS_WHEN_STARTING-aims_to_stop;++i){
 		draw_aim(landed_aims[i]);
 	}
@@ -324,7 +331,7 @@ void show_scores(byte playerrank){
 		if(rank == playerrank)
 			printw(">>>");
 		printw("%s",pname);
-		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%d",pscore);
+		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 	}
 	attroff(colors[3]);
