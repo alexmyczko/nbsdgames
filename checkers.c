@@ -26,7 +26,7 @@ byte cy,cx;//selected(choosen) piece
 int dpt;
 byte game[8][8];
 byte computer[2]={0,0};
-char sides[2]={'h','h'};
+char side[2]={'h','h'};
 byte score[2];//set by header()
 bool endgame=false;
 byte jumpagainy , jumpagainx;
@@ -325,11 +325,11 @@ double decide(byte side,byte depth,byte movetype){
 	bool canmove=0;
 	
 	byte nexts ;
-	if(movetype == IMAGINARY || movetype == NORMAL )
+	if(movetype == IMAGINARY || movetype == NORMAL ){
 		nexts=IMAGINARY;
-	else
+	}else{
 		nexts=ALT_IMG;
-
+	}
 	for(y=0;y<8;++y){
 		for(x=0;x<8;++x){
 			if(fj && (movetype==NORMAL || movetype==ALT_NRM) && jumpagainy>=0 && (jumpagainy!=y || jumpagainx!=x) )
@@ -357,11 +357,16 @@ double decide(byte side,byte depth,byte movetype){
 							//see the advantage you get
 							if(fj==1 && (movetype==ALT_NRM || movetype==NORMAL) )
 								adv= DOESNT_MATTER;//you have to do the move anyway
-							else if(!depth){
-								if(movetype==IMAGINARY || movetype==NORMAL)//calculating advantage only based on numerical superiority
+							else if(depth==0){
+								if(movetype==IMAGINARY || movetype==NORMAL){//calculating advantage only based on numerical superiority
 									adv=advantage(side);
-								else
+								}
+								else{
 									adv=posadvantage(side);//taking to account the position of the pieces
+								}
+							}
+							else if(depth<0){
+								adv= rand()%100;//random move
 							}
 							else{
 								if(nextturn==side)
@@ -381,10 +386,10 @@ double decide(byte side,byte depth,byte movetype){
 								game[toy][tox]/=2;
 							game[y][x]=game[toy][tox];
 							game[toy][tox]=0;
-							if(fj)
+							if(fj){
 								game[(toy+y)/2][(tox+x)/2]=captured;
-
-							if(besty<0 || adv>bestadv || (adv==bestadv && ( rand()%2 )) ){
+							}
+							if(besty<0 || (adv>bestadv|| (adv==bestadv && ( rand()%2 )))) {
 								besty=y;
 								bestx=x;
 								besttoy=toy;
@@ -404,14 +409,15 @@ double decide(byte side,byte depth,byte movetype){
 	EndLoop:
 	if( (movetype==NORMAL || movetype==ALT_NRM) && besty >= 0 ){
 		if(endgame && fj!=1 && movetype==NORMAL && bestadv==wrstadv ){//the algorithm is not given enough depth to determine which move is better
-			if(wrstadv == WIN){//the randomization in the algorithm may cause an illusion of an inevitable win in several moves
+			if(wrstadv == WIN){//the randomization in the algorithm may cause an illusion of an inevitable win in several moves, if not for this
 				if(depth > 1)
 					decide(side,depth-1,NORMAL);
 				else
 					goto Move;
 			}
-			else
+			else{
 				decide(side,depth,ALT_NRM);//change your opinion about what advantage means
+			}
 		}
 		else{
 			Move:
@@ -492,15 +498,16 @@ void gameplay(void){
 	erase();
 }
 int main(int argc,char** argv){
-	dpt=4;
+	dpt=-3;//start as stupid (actively try to lose). so noobs could play too.
 	int opt;
-	bool sides_chosen=0,no_replay=0;
+	bool sides_chosen=0,no_replay=0,fixed_starting_depth=0;
+	int auto_stupid_counter=0;
 	while( (opt= getopt(argc,argv,"hnp:1:2:"))!= -1 ){
 		switch(opt){
 			case '1':
 			case '2':
 				if(!strcmp("c",optarg) || !strcmp("h",optarg)){
-					sides[opt-'1']=optarg[0];
+					side[opt-'1']=optarg[0];
 					sides_chosen=1;
 				}
 				else{
@@ -509,8 +516,9 @@ int main(int argc,char** argv){
 				}
 			break;
 			case 'p':
-				if(sscanf(optarg,"%d",&dpt) && dpt<128 && dpt>0)
-					;
+				if(sscanf(optarg,"%d",&dpt) && dpt<128 && dpt>0){
+					fixed_starting_depth=1;
+				}
 				else{
 					puts("That should be a number from 1 to 127.");
 					return EXIT_FAILURE;
@@ -544,12 +552,12 @@ int main(int argc,char** argv){
 		input=getch();
 		if(input=='c'){
 			computer[0]=dpt;
-			sides[0]='c';
+			side[0]='c';
 			printw("Computer.\n");
 		}
 		else{
 			computer[0]=0;
-			sides[0]='h';
+			side[0]='h';
 			printw("Human.\n");
 		}
 		printw("Choose type of the white player(h/C)\n");
@@ -557,12 +565,12 @@ int main(int argc,char** argv){
 		input=getch();
 		if(input=='h'){
 			computer[1]=0;
-			sides[1]='h';
+			side[1]='h';
 			printw("Human.\n");
 		}
 		else{
 			computer[1]=dpt;
-			sides[1]='c';
+			side[1]='c';
 			printw("Computer.\n");
 		}
 	}
@@ -619,14 +627,14 @@ int main(int argc,char** argv){
 		result=-1;
 		goto End;
 	}
-	else if(todraw==50){ // 50 turns without any gain for either side
+	else if(todraw==50){ // 50 turns without any kind of gain for either side
 		result=0;
 		goto End;
 	}
 	endgame= score[t]<=5 || score[!t]<=5;
 	draw(3,0);
 	refresh();
-	while(sides[t]=='c'){
+	while(side[t]=='c'){
 		mvprintw(13,0,"Thinking...");
 		refresh();
 		decide(turn,dpt+(score[t]<score[!t])+endgame,1);
@@ -709,9 +717,38 @@ int main(int argc,char** argv){
 		case 2:
 			printw("You resigned.");
 	}
+	/*
+	The idea is:
+	Anyone should be likely to win the first time (so they don't lose interest)
+	should be likely to lose the second time (so they don't think the AI is stupid)
+	after that, the AI tries to play on par with the player by discovering his level of skill.*/
+
+	if(!fixed_starting_depth && result!=2 && result!=0 && (side[0]=='c'||side[1]=='c') && (side[0]=='h'||side[1]=='h')){
+		if( (side[0]=='c' && score[0]>score[1]) || (side[1]=='c' && score[1]>score[0])){//if computer won
+			if(dpt>-3){
+				--dpt;		
+			}
+			if(auto_stupid_counter==1){
+				dpt=0;	
+			}
+		}
+		else{
+			if(dpt<7){
+				++dpt;
+				printw(" I'd play better next time. ");
+			}
+			else{
+				printw(" Are you human? ");
+			}
+			if(!fixed_starting_depth && auto_stupid_counter==0){
+				dpt=4;
+				auto_stupid_counter+=1;
+			}
+		}
+	}
 	if(!no_replay){
 		printw(" Wanna rematch?(y/n)");
-		refresh();
+		refresh(); 
 		curs_set(1);
 		input=getch();
 		if(result==2){
