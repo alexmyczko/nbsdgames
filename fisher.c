@@ -30,7 +30,6 @@ int usleep(long usec) {
 #endif
 // 12 lines of water
 // 80 columns
-
 chtype colors[4]={A_NORMAL,A_STANDOUT};
 byte fish[10]={0};//positions
 byte caught=-1;
@@ -71,12 +70,11 @@ void draw(void){
 	filled_rect(0,0,12,80);
 	byte y;
 	mvprintw(0,0," __       Hooks:%d",hooknum);
-	mvprintw(1,0,"|__       Score:%d",score);
+	mvprintw(1,0,"|__       Score:%ld",score);
 	mvprintw(2,0,"|  ISHER");
 	mvprintw(9,32, "    O__/");
 	mvprintw(10,32," ___|_/ ");
 	mvprintw(11,32,"|     / ");
-	
 	if(clbtime){
 		if(count[clb]!=1){
 			mvprintw(9,43,"%d ",count[clb]);
@@ -149,19 +147,24 @@ void draw(void){
 			}
 		}
 	}
-	for(y=-3;y<0;++y)
+	for(y=-3;y<0;++y){
 		mvaddch(HLEN+y,HWID,ACS_VLINE);
+	}
 	attroff(colors[0]);
 	attron(colors[1]);
 	filled_rect(HLEN,0,LEN,WID);
-	for(y=0;y<hook;++y)
+	for(y=0;y<hook;++y){
 		mvaddch(HLEN+y,HWID,ACS_VLINE);
-	if(caught==-1)
+	}
+	if(caught==-1){
 		mvaddch(HLEN+hook,HWID,')');
-	else
+	}
+	else{
 		mvaddch(HLEN+hook,HWID,sym[caught]);
-	for(y=0;y<10;++y)
+	}
+	for(y=0;y<10;++y){
 		mvaddch(HLEN+1+y,fish[y],sym[y]);
+	}
 	attroff(colors[1]);
 	
 }
@@ -223,7 +226,7 @@ void show_scores(byte playerrank){
 		if(rank == playerrank)
 			printw(">>>");
 		printw("%s",pname);
-		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%d",pscore);
+		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 	}
 	attroff(colors[3]);
