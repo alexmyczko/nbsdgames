@@ -154,8 +154,8 @@ void gameplay(void){
 	attron(A_BOLD);
 	mvprintw(3,0,"  **** THE GAMEPLAY ****");
 	attroff(A_BOLD);
-	mvprintw(4,0,"Click on a tile to see the gylph it contains,\n");
-	printw(      "then try to find a matching gylph the same way.\n");
+	mvprintw(4,0,"Click on a tile to see the glyph it contains,\n");
+	printw(      "then try to find a matching glyph the same way.\n");
 	printw(      "They form a pair only when you click a tile\n");
 	printw(	     "directly after the match. The game ends when \n");
 	printw(	     "you have found all the matching pairs.\n");
