@@ -23,7 +23,7 @@ int len=5,wid=6;
 int py,px;
 chtype colors[6]={A_BOLD};
 int score[2] ={0};
-int sides[2]={'h','h'};
+int side[2]={'h','h'};
 char so[2] = {'S','O'};
 
 char rd(char board[len][wid],int y, int x){
@@ -68,7 +68,7 @@ void draw(int sy,int sx,char board[len][wid],byte colored[len][wid]){
 			if( board[y][x] )
 				prnt = board[y][x];
 			else
-				prnt = '_';
+				prnt = '.';
 			mvaddch(sy+1+y,sx+x*2+1,attr|prnt);
 		}
 	}
@@ -146,8 +146,12 @@ int decide ( char board[len][wid],byte colored[len][wid], byte depth , byte side
 				for(c=0;c<2;++c){
 					board[y][x]=so[c];
 					adv=did_sos(board,y,x);
-					if(depth>0)
+					if(depth<0){
+						adv=rand();
+					}
+					if(depth>0){
 						oppadv= decide(board,NULL,depth-1,-1);
+					}
 					if(depth>0 && oppadv != INT_MIN)//this has no meanings if the opponet cannot move
 						adv-=1*oppadv;
 					if(besty<0 ||adv>bestadv || (adv==bestadv && y==ry && x==rx &&  c==rc /*c==0*/) ){
@@ -156,7 +160,7 @@ int decide ( char board[len][wid],byte colored[len][wid], byte depth , byte side
 						bestx=x;
 						bestchar=so[c];		
 					}
-					board[y][x]=0;
+					board[y][x]=0;//undoing the move
 				}
 			}
 		}
@@ -230,7 +234,7 @@ void gameplay(void){
 	attroff(A_BOLD);
 	move(4,0);
 	printw("The game is similar to Tic Tac Toe:\n");
-	printw("The players write S and O in the squares\n");
+	printw("The players write S and O in the fields\n");
 	printw("and making the straight connected sequence\n");
 	printw("S-O-S makes you a score; obviously, the\n");
 	printw("player with a higher score wins.");
@@ -239,16 +243,17 @@ void gameplay(void){
 	erase();
 }
 int main(int argc, char** argv){
-	int dpt=1;
+	int dpt=-1;
 	signal(SIGINT,sigint_handler);
 	int opt;
-	bool sides_chosen=0,no_replay=0;
+	int auto_stupid_counter=0;
+	bool sides_chosen=0,no_replay=0,fixed_starting_depth=0;
 	while( (opt= getopt(argc,argv,"hnp:1:2:"))!= -1 ){
 		switch(opt){
 			case '1':
 			case '2':
 				if(!strcmp("c",optarg) || !strcmp("h",optarg)){
-					sides[opt-'1']=optarg[0];
+					side[opt-'1']=optarg[0];
 					sides_chosen=1;
 				}
 				else{
@@ -257,8 +262,9 @@ int main(int argc, char** argv){
 				}
 			break;
 			case 'p':
-				if(sscanf(optarg,"%d",&dpt) && dpt<128 && dpt>0)
-					;
+				if(sscanf(optarg,"%d",&dpt) && dpt<128 && dpt>0){
+					fixed_starting_depth=1;
+				}
 				else{
 					puts("That should be a number from 1 to 127.");
 					return EXIT_FAILURE;
@@ -305,11 +311,11 @@ int main(int argc, char** argv){
 		refresh();
 		input=getch();
 		if(input=='c'){
-			sides[0]='c';
+			side[0]='c';
 			printw("Computer.\n");
 		}
 		else{
-			sides[0]='h';
+			side[0]='h';
 			printw("Human.\n");
 		}
 		refresh();
@@ -317,11 +323,11 @@ int main(int argc, char** argv){
 		refresh();
 		input=getch();
 		if(input=='h'){
-			sides[1]=0;
+			side[1]='h';
 			printw("Human.\n");
 		}
 		else{
-			sides[1]=dpt;
+			side[1]='c';
 			printw("Computer.\n");
 		}
 	}
@@ -349,14 +355,14 @@ int main(int argc, char** argv){
 	Turn:
 	erase();
 	mvprintw(sy+0,sx+0," _  _  _");
-	mvprintw(sy+1,sx+0,"(_'| |(_'  %d vs %d \n",score[0],score[1]);
+	mvprintw(sy+1,sx+0,"(_'| |(_' %d:%d \n",score[0],score[1]);
 	mvprintw(sy+2,sx+0,"._):_:._) \n");
 	draw(sy+3,sx+0,board,colored);
 	if( isfilled(board) )
 		goto End;
 	refresh();
 	t=!t;
-	if(sides[t]=='c'){
+	if(side[t]=='c'){
 		mvprintw(sy+len+5,sx+0,"Thinking...");
 		refresh();
 		decide(board,colored,dpt,t);
@@ -366,7 +372,7 @@ int main(int argc, char** argv){
 	while(1){
 		erase();
        		mvprintw(sy+0,sx+0," _  _  _");
-		mvprintw(sy+1,sx+0,"(_'| |(_'  %d vs %d \n",score[0],score[1]);
+		mvprintw(sy+1,sx+0,"(_'| |(_' %d:%d \n",score[0],score[1]);
 		mvprintw(sy+2,sx+0,"._):_:._) \n");
 		draw(sy+3,sx+0,board,colored);
 		refresh();
@@ -418,10 +424,36 @@ int main(int argc, char** argv){
 		}
 	}
 	End:
-	if( score[1] == score[0])
+	if( score[1] == score[0]){
 		mvprintw(sy+len+5,sx+0,"Draw!!");
-	else
+	}
+	else{
 		mvprintw(sy+len+5,sx+0,"Player %d won the game!",(score[1]>score[0]) +1);
+	}
+	if(!fixed_starting_depth && score[1] != score[0] && (side[0]=='c'||side[1]=='c') && (side[0]=='h'||side[1]=='h')){
+                if( (side[0]=='c' && score[0]>score[1]) || (side[1]=='c' && score[1]>score[0])){//if computer won
+                        if(dpt>-3){
+                                --dpt;
+                        }
+                        if(auto_stupid_counter==1){
+                                dpt=0;
+                        }
+                }
+                else{
+                        if(dpt<7){
+                                ++dpt;
+                                printw(" I'd play better next time. ");
+                        }
+                        else{
+                                printw(" Are you human? ");
+                        }
+                        if(!fixed_starting_depth && auto_stupid_counter==0){
+                                dpt=3;
+                                auto_stupid_counter+=1;
+                        }
+                }
+        }
+
 	if(!no_replay){
 		printw(" Wanna play again?(y/n)");
 		curs_set(1);
