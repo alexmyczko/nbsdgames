@@ -15,7 +15,7 @@ You should have received a copy of the CC0 Public Domain Dedication along with t
 byte py,px;//cursor
 const char piece[2] = {'O','X'};
 char game[8][8];//main board
-char sides[2]={'h','h'};
+char side[2]={'h','h'};
 byte score[2];//set by header()
 
 void rectangle(byte sy,byte sx){
@@ -46,7 +46,7 @@ void header(void){//abuse, used to count the pieces on each side too
 		}
 	}
 	mvaddch(0,1,  '_');
-	mvprintw(1,0,"|_) %2d:%2d",score[0],score[1]);
+	mvprintw(1,0,"|_) %2d:%2d",score[1],score[0]);
 	mvprintw(2,0,"| \\EVERSI ");
 }
 
@@ -149,10 +149,12 @@ double advantage(char board[8][8],char piece){
 			if(board[y][x]){
 				if(board[y][x]==piece){
 					++own;
-					if( ((y==7 || y==0)&&(x!=7 && x!=0)) || ((x==7 || x==0)&&(y!=7 && y!=0)) )//edges
+					if( ((y==7 || y==0)&&(x!=7 && x!=0)) || ((x==7 || x==0)&&(y!=7 && y!=0)) ){//edges
 						own+=100;
-					if( (y==7 || y==0)&&(x==7 || x==0) )//corners
+					}
+					if( (y==7 || y==0)&&(x==7 || x==0) ){//corners
 						own+=10000;
+					}
 				}
 				else{
 					++opp;
@@ -174,7 +176,7 @@ void cp(char A[8][8],char B[8][8]){//copy the board A to B
 			B[y][x]=A[y][x];
 }
 
-double decide(char board[8][8],char piece,char opponet,byte depth){//AI algorithm
+double decide(char board[8][8],char piece,char opponent,byte depth){//AI algorithm
 	if(!can_move(board,piece))
 		return 0;
 	char plan[8][8];
@@ -186,15 +188,21 @@ double decide(char board[8][8],char piece,char opponet,byte depth){//AI algorith
 			if(can_reverse(y,x,board,piece) ){
 				cp(board,plan);//backtrack
 				reverse(y,x,plan,piece);
-				if(depth){
-					adv= decide(plan,opponet,piece,depth-1);//least benefit for the opponet
-					if(adv) //the opponet can make a move
-						adv = 1/adv;
-					else
-						adv=advantage(plan,piece);
+				if(depth<0){
+					adv=rand();
 				}
-				else
+				else if(depth){
+					adv= decide(plan,opponent,piece,depth-1);//least benefit for the opponent
+					if(adv){ //the opponent can make a move
+						adv = 1/adv;
+					}
+					else{
+						adv=advantage(plan,piece);
+					}
+				}
+				else{
 					adv=advantage(plan,piece);
+				}
 				if(adv>bestadv){
 					bestadv=adv;
 					besty=y;
@@ -253,7 +261,7 @@ void gameplay(void){
 	attroff(A_BOLD);
 	move(4,0);
 	printw("Players take turns placing disks on the board:\n\n");
-	printw("1) Any pieces of the opponet's color that is bounded\n");
+	printw("1) Any pieces of the opponent's color that is bounded\n");
 	printw("   in a straight line between the piece just placed and\n");
 	printw("   another piece of the current player's color would turn\n");
 	printw("   to the current player's color.\n\n");
@@ -264,15 +272,16 @@ void gameplay(void){
 	getch();
 }
 int main(int argc , char** argv){
-	int depth=2;
+	int depth=-1;
+	int auto_stupid_counter=0;
 	int opt;
-	bool sides_chosen=0,no_replay=0;
+	bool sides_chosen=0,no_replay=0,fixed_starting_depth=0;
 	while( (opt= getopt(argc,argv,"hnp:1:2:"))!= -1 ){
 		switch(opt){
 			case '1':
 			case '2':
 				if(!strcmp("c",optarg) || !strcmp("h",optarg)){
-					sides[opt-'1']=optarg[0];
+					side[opt-'1']=optarg[0];
 					sides_chosen=1;
 				}
 				else{
@@ -282,7 +291,7 @@ int main(int argc , char** argv){
 			break;
 			case 'p':
 				if(sscanf(optarg,"%d",&depth) && depth<128 && depth>0)
-					;
+					fixed_starting_depth=1;
 				else{
 					puts("That should be a number from 1 to 127.");
 					return EXIT_FAILURE;
@@ -317,26 +326,28 @@ int main(int argc , char** argv){
 		printw("Choose type of the white player (H/c)\n");
 		refresh();
 		input=getch();
-		if(input == 'c'){
-			sides[0]='c';
-			printw("Computer.\n");
-		}
-		else{
-			sides[0]='h';
+		if(input == 'h'){
+			side[0]='h';
 			printw("Human.\n");
 		}
+		else{
+			side[0]='c';
+			printw("Computer.\n");
+		}
+	
 		refresh();
 		printw("Choose type of the black player(h/C)\n");
 		refresh();
 		input=getch();
-		if(input == 'h'){
-			sides[1]='h';
-			printw("Human.\n");
-		}
-		else{
-			sides[1]='c';
+		if(input == 'c'){
+			side[1]='c';
 			printw("Computer.\n");
 		}
+		else{
+			side[1]='h';
+			printw("Human.\n");
+		}
+	
 	}
 	Start: 
 	curs_set(0);
@@ -351,6 +362,7 @@ int main(int argc , char** argv){
 	game[4][3]=piece[1];
 
 	Turn:
+	srand(time(NULL)%UINT_MAX);
 	erase();
 	flushinp();
 	draw(3,0);
@@ -360,7 +372,7 @@ int main(int argc , char** argv){
 		goto End;
 
 	turn = !turn;
-	if(sides[turn]=='c'){
+	if(side[turn]=='c'){
 		if(can_move(game,piece[turn])){
 			mvprintw(13,0,"Thinking...");
 			refresh();
@@ -383,7 +395,7 @@ int main(int argc , char** argv){
 			erase();
 			draw(3,0);
 			header();
-			if(sides[0]=='h' && sides[1] =='h'){
+			if(side[0]=='h' && side[1] =='h'){
 				mvprintw(2,10,"%c's turn",piece[turn]);
 			}
 			refresh();
@@ -425,11 +437,36 @@ int main(int argc , char** argv){
 		mvprintw(13,0,"'%c' won.",piece[0]);
 	else
 		mvprintw(13,0,"'%c' won.",piece[1]);
+ 	
+	if(!fixed_starting_depth && !resign && score[0]!=score[1] && (side[0]=='c'||side[1]=='c') && (side[0]=='h'||side[1]=='h')){
+		if( (side[0]=='c' && score[0]>score[1]) || (side[1]=='c' && score[1]>score[0])){//if computer won
+			if(depth>-3){
+				--depth;
+			}
+			if(auto_stupid_counter==1){
+				depth=0;
+			}
+		}
+		else{
+			if(depth<7){
+				++depth;
+				printw(" I'd play better next time. ");
+			}
+			else{
+				printw(" Are you human? ");
+			}
+			if(!fixed_starting_depth && auto_stupid_counter==0){
+				depth=4;
+				auto_stupid_counter+=1;
+			}
+		}
+	}
+   	
 	if(!no_replay){	
 		printw(" Wanna play again?(y/n)");
 		curs_set(1);
 		input=getch();
-		if( resign){
+		if(resign){
 			if (input=='Y' || input=='y') 
 				goto Start;
 		}
