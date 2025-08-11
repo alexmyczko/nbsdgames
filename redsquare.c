@@ -20,13 +20,19 @@ You should have received a copy of the CC0 Public Domain Dedication along with t
 #define ALIVE 1
 #define RED 2
 #define EMPTY_LINES 7
+#define SUBTITLEY (EMPTY_LINES+view_len-2)
+#define SAVE_TO_NUM 10
 int level;
 byte py,px;
 byte cy,cx;//cross
 bool coherent;//square's coherence
 int anum,rnum;//reds and otherwise alive cell counts
 int stale_cells,stale_for;//throw new cells if it is stale for a long time
+long score;
+char msg[1000]={0};
+char msg_show=0;
 chtype colors[6]={0};
+
 void cp(byte a[RLEN][RWID],byte b[RLEN][RWID]){
 	byte y,x;
 	for(y=0;y<RLEN;++y)
@@ -39,6 +45,73 @@ void logo(void){
 	addstr("|_) (_\n");
 	addstr("| \\ED_)QUARE");
 }
+
+byte save_score(void){
+	return fallback_to_home("redsquare_scores",score,SAVE_TO_NUM);
+
+}
+void show_scores(byte playerrank){
+	erase();
+	logo();
+	if(playerrank==FOPEN_FAIL){
+		mvaddstr(3,0,"Couldn't open scorefile.");
+		printw("\nHowever, your score is %ld.",score);
+		refresh();
+		return;
+	}
+	if(playerrank == 0){
+		char formername[60]={0};
+		long formerscore=0;
+		rewind(score_file);
+		fscanf(score_file,"%*s : %*d\n");
+		move(3,0);
+		byte b=0;
+		if ( fscanf(score_file,"%s : %ld\n",formername,&formerscore)==2){
+			printw("*****CONGRATULATIONS!****\n");
+			printw("             You beat the\n");
+			printw("                 previous\n");
+			printw("                   record\n");
+			printw("                       of\n");
+			printw("           %14ld\n",formerscore);
+			printw("                  held by\n");
+			printw("              %11s\n",formername);
+			printw("               \n");
+			printw("               \n");
+			printw("*************************\n");
+			printw("Press a key to proceed:");
+			move(4,0);
+			mvprintw(4,0, "     _____ ");
+			mvprintw(5,0, "   .'     |");
+			mvprintw(6,0, " .'       |");
+			mvprintw(7,0, " |  .|    |");
+			mvprintw(8,0, " |.' |    |");
+			mvprintw(9,0, "     |    |");
+			mvprintw(10,0,"  ___|    |___");
+			mvprintw(11,0," |            |");
+			mvprintw(12,0," |____________|");
+			nocbreak();
+			cbreak();
+			erase();
+			logo();
+		}
+	}
+	//scorefile is still open with w+
+	move(3,0);
+	char pname[60] = {0};
+	long pscore=0;
+	byte rank=0;
+	rewind(score_file);
+	printw(">*>*>Top %d<*<*<\n",SAVE_TO_NUM);
+	while( rank<SAVE_TO_NUM && fscanf(score_file,"%s : %ld\n",pname,&pscore) == 2){
+		if(rank == playerrank)
+			printw(">>>");
+		printw("%d) %s : %ld\n",rank+1,pname,pscore);
+		++rank;
+	}
+	addch('\n');
+	refresh();
+}
+
 
 int beginy,view_len;
 void setup_scroll(){
@@ -196,11 +269,28 @@ void add_line(byte board[LEN][WID],byte line,const char* str){
 			board[line][x]=0;*/
 	}
 }
-void new_level(byte board[LEN][WID]){
-	++level;
+void new_level(byte board[LEN][WID],int level){
 	memset(board,0,RLEN*RWID);
 	switch(level){
-		case 0:
+		 case 0:
+			cy=12;
+			cx=12;
+			add_line(board,11,"  #    #    #    #           ");
+			add_line(board,12," # #  # #  #/#  # #          ");
+		     	add_line(board,13," # #  # #  # #  # #          ");
+			add_line(board,14,"  #    #    #    #          ");
+			         
+			add_line(board,15,"                ");
+			add_line(board,16,"                         ");
+			add_line(board,17,"                                          ");
+			add_line(board,18,"      ##  ##     ## ##     ## ## ##       ");
+			add_line(board,19,"      ##  ##     ## ##     ## ## ##       ");
+			add_line(board,20,"                                          ");
+			add_line(board,21,"   #                       ## ## ##       ");
+			add_line(board,22,"   #                       ## ## ##       ");
+			add_line(board,23,"   #                                     ");
+		break;
+		case 1:
 			cy=12;
 			cx=RWID/2;
 			add_line(board,5, "                ####   #");
@@ -221,7 +311,7 @@ void new_level(byte board[LEN][WID]){
 			add_line(board,22,"                                      #  #");
 			add_line(board,23,"                                       ##");
 		break;
-		case 1:
+		case 2:
 			cy=12;
 			cx=RWID/2;
 			add_line(board,5, " #     #  #           #");
@@ -238,7 +328,7 @@ void new_level(byte board[LEN][WID]){
 			add_line(board,19,"  #       #     #   # #  #  #  #  #  #  # #");
 			add_line(board,20,"  #       #      #   #    ## #  #  ##    #");
 		break;
-		case 2:
+		case 3:
 			cy= 12;
 			cx= 10;
 			add_line(board,3, "             ##             #        #");
@@ -261,7 +351,7 @@ void new_level(byte board[LEN][WID]){
 			add_line(board,30,"             ##");
 			add_line(board,31,"             ##");
 		break;
-		case 3:
+		case 4:
 			cy=RLEN/2;
 			cx=RWID/2;
 			add_line(board,0, "                                               ");
@@ -297,7 +387,7 @@ void new_level(byte board[LEN][WID]){
 			add_line(board,31,"                           #                   ");
 			add_line(board,32,"                         ###                   ");
 		break;
-		case 4:
+		case 5:
 			cy=rand()%(RLEN/2);
 			cx=rand()%(RWID/2);
 			add_line(board,0, "                                               ");
@@ -332,10 +422,13 @@ void new_level(byte board[LEN][WID]){
 			add_line(board,26,"     #                                   #     ");
 			add_line(board,27," #   #                               #   #     ");
 			add_line(board,28,"  ####                                ####     ");
+		break;
+		case 6:	
 			add_line(board,5,"                #");
 			add_line(board,6,"                ##");
 			add_line(board,7,"               ##");
 		break;
+
 		default:
 			srand(level);
 			cy=rand()%(RLEN/2);
@@ -481,14 +574,60 @@ void gameplay(void){
 	attron(A_BOLD);
 	mvprintw(3,0,"  **** THE GAMEPLAY ****");
 	attroff(A_BOLD);
-	mvprintw(4,0,"Move the square and catch the X or outnumber the\n");
+
+	mvprintw(4,0,"See order in chaos and use the predictable to \n");
+	printw(      "prepare for the unpredictable.\n");
+	printw(      "Learn from your mistake and try again and again.\n\n");
+
+	printw(      "Move the square and catch the X or outnumber the\n");
 	printw(      "white cells with those of your own,\n");
 	printw(      "in the environment of Conway's game of life.\n");
+	printw(      "Learn from your mistake and try again and again.\n");
+	printw(       "\nHint: You can try doing the trick below, and more:\n\n");
+
+	printw(      "                               OO  ##\n");
+	printw(      "                               OO #  #\n");
+	printw(      "                                   ## \n");
 	refresh();
 	cbreak();
 	getch();
 	halfdelay(1);
 	erase();
+}
+int avoid_accidental_pass(){
+	int input;
+	Again:
+	input=getch();
+	if( input==ERR){
+		goto Again;
+	}
+	if( (input=='k' || (input==KEY_UP||input=='w'))){
+		goto Again;
+	}
+	else if( (input=='j' || (input==KEY_DOWN||input=='s')) ){
+		goto Again;
+	}
+	else if( (input=='h' || (input==KEY_LEFT||input=='a'))){
+		goto Again;
+	}
+	else if( (input=='l' || (input==KEY_RIGHT||input=='d'))){
+		goto Again;
+	}
+	return input;
+
+}
+void camera_on_reds(byte board[LEN][WID]){
+	int y,x;
+	for(y=0;y<RLEN;++y){
+		for(x=0;x<RWID;++x){
+			if(board[y][x]==RED){
+				py=y;
+				px=x;
+				return;
+			}
+		}
+	}
+
 }
 int main(int argc,char** argv){
 	if(argc>1){
@@ -519,17 +658,19 @@ int main(int argc,char** argv){
 	int input=0;
 	int prey,prex;
 	int cinred;
-	level=-1;
 	Start:
+	score=0;
+	level=0;
 	stale_cells=0;
 	stale_for=0;
+	msg_show=0;
 	curs_set(0);
 	halfdelay(9);
 	cinred=0;
 	py=LEN*3/4;
 	px=WID/2;
 	curs_set(0);
-	new_level(board);
+	new_level(board,level);
 	mk_square(board);
 	while(1){
 		switch(rand()%5){//move the X
@@ -556,22 +697,39 @@ int main(int argc,char** argv){
 			case 4:
 			;//stay there
 		}
-		if(board[cy][cx]==RED)
+		if(coherent && (cy==py||cy==(py+LEN+1)%LEN)&& (cx==px||cx==(px+WID+1)%WID)){
 			++cinred;
-		else
-			cinred=0;	
+		}
+		else{
+			cinred=0;
+		}
 		count(board);
 		if(no_square(board)){
 			coherent=0;
 		}
-		if(!coherent && rnum>=4)
+		if(!coherent && rnum>=4){
 			reemerge(board);
+		}
 		erase();
 		logo();
+		mvaddstr(2,16,"Score:");
+		if(rnum>anum){
+			attron(colors[3]);
+		}
+		printw("%ld",score);
+		if(rnum>anum){
+			attroff(colors[3]);
+		}
 		draw(board);
+		if(msg_show){
+			move(SUBTITLEY,0);
+			addstr(msg);
+			--msg_show;
+		}
 		refresh();
-		if(coherent || abs(stale_cells-(rnum+anum))<stale_cells/10){//if there is little variation it is stale
+		if(coherent || abs(stale_cells-(rnum+anum))>stale_cells/10){//if there is too much variation it is not stale
 			stale_cells=rnum+anum;
+			stale_for=0;
 		}
 		else{
 			stale_for+=1;
@@ -585,34 +743,58 @@ int main(int argc,char** argv){
 			}
 			stale_for=0;
 		}
-		if(rnum>anum||cinred==2){
-			mvprintw(LEN+5,0,"Well done! Press a key to continue:");
+		if((rnum>anum && anum==0)||cinred==2){
+	
+			move(SUBTITLEY,0);
+			if(rnum>anum && anum==0){
+				if(rnum>100){
+					printw("HEAVY WIN +1000 ");
+					score+=1000;
+				}
+				else{
+					printw("Total win! +100 ");
+					score+=100;
+				}
+			}
+			if(cinred==2){
+				printw("Win by capture! +20 ");
+			}
+			printw("Well done! Press a key to continue: ");
 			curs_set(1);
-			getch();
+			avoid_accidental_pass();
 			curs_set(0);
-			new_level(board);
+			++level;
+			new_level(board,level);
 			py=LEN*3/4;
 			px=WID/2;
+			msg_show=0;
 			mk_square(board);
 			continue;
 		}
 		else if(!rnum){
-			move(LEN+5,0);
-			printw("You have lost The Game");
+			/*move(SUBTITLEY,0);
+			printw("You have lost The Game ");
 			if(rand()%5==0)
-				printw(" (and RedSquare)");
-			printw(". ");
+				printw("(and RedSquare) ");
+			printw(". ");*/
 			break;
 		}
 		halfdelay(9);
 		input = getch();
 		live(board);
-		count(board);//apparently this should come at both sides of live+draw. resulting from trial and error.
-		if(no_square(board))//the square has participated in life reactions if so
+		count(board);
+		if(no_square(board)){//the square has participated in life reactions if so
 			coherent=0;
-		if(!coherent)//there can be a square
-			reemerge(board);
-
+		}
+		if(!coherent){
+			//camera_on_reds(board);
+			reemerge(board);//there might be another square somewhere
+			if(coherent){
+				sprintf(msg,"Reemergence! +30 ");
+				msg_show=20;
+				score+=30;
+			}
+		}
 		if( input==KEY_F(1) || input=='?' )
 			help();
 		if( (input==KEY_F(2)||input=='!') )
@@ -641,9 +823,6 @@ int main(int argc,char** argv){
 		}
 		else 
 			goto DidntMove;
-		if(!coherent){
-			reemerge(board);
-		}
 		if(coherent){ 
 			rm_square(board,prey,prex);
 			mk_square(board);
@@ -673,14 +852,23 @@ int main(int argc,char** argv){
 			gameplay();
 		}
 	}
-	move(EMPTY_LINES+view_len,0);
-	printw("Wanna play again?(y/n)");
+	
 	nocbreak();
 	cbreak();
+	draw(board);
+	refresh();
+	move(SUBTITLEY,0);
+	printw("You have lost The Game");
+	if(rand()%5==0)
+		printw(" (and RedSquare)");
+	printw(". ");
+	printw("Press a key to continue:");
+	avoid_accidental_pass();
+	show_scores(save_score());
+	printw("Game over! Wanna play again?(y/n)");
 	curs_set(1);
-	flushinp();
 	
-	input=getch();
+	input=avoid_accidental_pass();
 
 	if(input != 'N' && input != 'n' && input != 'q')
 		goto Start;
