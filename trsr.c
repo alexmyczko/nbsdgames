@@ -416,7 +416,6 @@ int main(int argc, char** argv){
 
 	byte board[len][wid];
 	byte mines[len][wid];
-	char result[70];
 	int sy,sx;
 	byte repeats;
 	bool first_click;	
@@ -548,7 +547,7 @@ int main(int argc, char** argv){
 		printw("Square won.");
 		attroff(colors[2]);
 	}
-	printw(" Wanna play again?(y/n)",result);
+	printw(" Wanna play again?(y/n)");
 
 	curs_set(1);
 	input=getch();
