@@ -23,7 +23,6 @@ You should have received a copy of the CC0 Public Domain Dedication along with t
 
 byte py,px;//cursor
 byte cy,cx;//selected(choosen) piece
-int dpt;
 byte game[8][8];
 byte computer[2]={0,0};
 char side[2]={'h','h'};
@@ -155,7 +154,6 @@ bool can_move(byte side){
 		}
 	}
 	return 0;
-	
 }
 //fill mvy/x with possible jumping moves
 bool jumps(byte ty,byte tx,byte mvy[4],byte mvx[4]){
@@ -498,7 +496,7 @@ void gameplay(void){
 	erase();
 }
 int main(int argc,char** argv){
-	dpt=-3;//start as stupid (actively try to lose). so noobs could play too.
+	int depth=-3;//start as stupid (actively try to lose). so noobs could play too.
 	int opt;
 	bool sides_chosen=0,no_replay=0,fixed_starting_depth=0;
 	int auto_stupid_counter=0;
@@ -516,7 +514,7 @@ int main(int argc,char** argv){
 				}
 			break;
 			case 'p':
-				if(sscanf(optarg,"%d",&dpt) && dpt<128 && dpt>0){
+				if(sscanf(optarg,"%d",&depth) && depth<128 && depth>0){
 					fixed_starting_depth=1;
 				}
 				else{
@@ -551,7 +549,7 @@ int main(int argc,char** argv){
 		refresh();
 		input=getch();
 		if(input=='c'){
-			computer[0]=dpt;
+			computer[0]=depth;
 			side[0]='c';
 			printw("Computer.\n");
 		}
@@ -569,7 +567,7 @@ int main(int argc,char** argv){
 			printw("Human.\n");
 		}
 		else{
-			computer[1]=dpt;
+			computer[1]=depth;
 			side[1]='c';
 			printw("Computer.\n");
 		}
@@ -637,7 +635,7 @@ int main(int argc,char** argv){
 	while(side[t]=='c'){
 		mvprintw(13,0,"Thinking...");
 		refresh();
-		decide(turn,dpt+(score[t]<score[!t])+endgame,1);
+		decide(turn,depth+(score[t]<score[!t])+endgame,1);
 		if(!(fj && jumpagainy>=0 && !kinged )){
 			goto Turn;
 		}
@@ -725,23 +723,23 @@ int main(int argc,char** argv){
 
 	if(!fixed_starting_depth && result!=2 && result!=0 && (side[0]=='c'||side[1]=='c') && (side[0]=='h'||side[1]=='h')){
 		if( (side[0]=='c' && score[0]>score[1]) || (side[1]=='c' && score[1]>score[0])){//if computer won
-			if(dpt>-3){
-				--dpt;		
+			if(depth>-1){
+				--depth;		
 			}
 			if(auto_stupid_counter==1){
-				dpt=0;	
+				depth=0;	
 			}
 		}
 		else{
-			if(dpt<7){
-				++dpt;
+			if(depth<5){
+				++depth;
 				printw(" I'd play better next time. ");
 			}
 			else{
 				printw(" Are you human? ");
 			}
 			if(!fixed_starting_depth && auto_stupid_counter==0){
-				dpt=4;
+				depth=4;
 				auto_stupid_counter+=1;
 			}
 		}

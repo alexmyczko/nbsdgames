@@ -155,7 +155,7 @@ void show_scores(FILE* score_file){
 			attroff(A_REVERSE);
 		}
 
-		mvprintw(2+rank,COLS-1-digit_count(pscore),"%d",pscore);
+		mvprintw(2+rank,COLS-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 		if(!strcmp(pname,(getenv("NB_PLAYER")?getenv("NB_PLAYER"):getenv("USER")))){
 			attroff(colors[(2+2*rank)%4]);
