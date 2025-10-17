@@ -293,7 +293,7 @@ int main(int argc,char** argv){
 	if(carrots_found==carrot_count)
 		mvprintw(len*2+4,0,"YAY!!");
 	else
-		mvprintw(len*2+4,0,"You gathered %2.1f%% of the carrots in %d seconds.",(float) carrots_found*100/carrot_count,giventime);
+		mvprintw(len*2+4,0,"You gathered %2.1f%% of the carrots in %ld seconds.",(float) carrots_found*100/carrot_count,giventime);
 
 	printw(" Wanna play again?(y/n)");
 	curs_set(1);
