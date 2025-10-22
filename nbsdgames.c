@@ -44,27 +44,35 @@ int usleep(long usec) {
 chtype colors[4]={A_NORMAL,A_STANDOUT};
 char main_menu[]={
 	"See High Scores\n"
+	NB"fisher\n"
+	NB"darrt\n"
+	NB"miketron\n"
+	NB"muncher\n"
+	NB"battleship\n"
+	NB"scissor\n"
+
 	NB"jewels\n"
 	NB"sudoku\n"
 	NB"mines\n"
 	NB"reversi\n"
+
+	NB"pipes"
 	NB"checkers\n"
-	NB"battleship\n"
 	NB"rabbithole\n"
+
+	NB"snakeduel\n"
+
 	NB"sos\n"
-	NB"pipes\n"
 	NB"fifteen\n"
 	NB"memoblocks\n"
-	NB"fisher\n"
-	NB"muncher\n"
-	NB"miketron\n"
 	NB"redsquare\n"
-	NB"darrt\n"
-	NB"snakeduel\n"
 	NB"tugow\n"
 	NB"revenge\n"
 	NB"sjump\n"
 	NB"trsr\n"
+	
+	NB"revenge\n"
+	NB"redsquare\n"
 };
 char ascii_art[]={
 "     ######                    ######    "
