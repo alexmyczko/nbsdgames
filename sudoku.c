@@ -346,10 +346,9 @@ void help(void){
 	mvprintw(9,0,"r : Restart");
 	if(size>4)
 		printw(" (some of these alphabet controls maybe overridden in certain sizes)");
-	mvprintw(10,0,"? : Hint (not like in other games)");
-	mvprintw(11,0,"F1 & F2: Help on controls & gameplay");
-	mvprintw(12,0,"PgDn,PgUp,<,> : Scroll");
-	mvprintw(15,0,"Press a key to continue");
+	mvprintw(10,0,"F1 & F2: Help on controls & gameplay");
+	mvprintw(11,0,"PgDn,PgUp,<,> : Scroll");
+	mvprintw(14,0,"Press a key to continue");
 	refresh();
 	getch();
 	erase();
@@ -481,10 +480,12 @@ int main(int argc,char** argv){
 			if(sx< -(s*2))
 				sx=-(s*2);
 		}
-		if(input == KEY_F(1))
+		if(input == KEY_F(1)||input=='?'){
 			help();
-		if((input==KEY_F(2)||input=='!'))
+		}
+		if((input==KEY_F(2)||input=='!')){
 			gameplay();
+		}
 		if(input == KEY_MOUSE)
 			mouseinput(sy,sx);
 		if(input == KEY_UP && py)
