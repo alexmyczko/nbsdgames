@@ -81,6 +81,7 @@ char logo[]=
 
 
 char choose_from[]="7894561230";
+char home_row[]=   "asdfghjkl;'";
 char type_str[10]={0};
 byte offset=0;
 byte level=0;
@@ -145,7 +146,7 @@ void draw(void){
 	}
 	mvprintw(15+level,offset-10,"Type!");
 	mvprintw(16+level,offset-10,"%s",type_str);
-	mvprintw(11+level,offset-10,"Score: %d",score);
+	mvprintw(11+level,offset-10,"Score: %ld",score);
 	mvprintw(12+level,offset-10,"Level: %d",level);
 	draw_sprite(0,0,logo,0);
 	draw_sprite(12,offset,dudes,level%4);
@@ -207,7 +208,7 @@ void show_scores(byte playerrank){
 		if(rank == playerrank)
 			printw(">>>");
 		printw("%s",pname);
-		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%d",pscore);
+		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 	}
 	attroff(colors[3]);
@@ -221,6 +222,7 @@ void help(void){
 	blue_border();
 	mvprintw(1,HWID-4,"GAME PLAY");
 	mvprintw(3,1,"Type those things and beat the other guy");
+	mvprintw(4,1,"Press h to use home-row mode.");
 	attroff(colors[3]);
 	refresh();
 	getch();
@@ -251,6 +253,7 @@ int main(int argc,char** argv){
 		for(byte b=0;b<4;++b)
 			colors[b]=COLOR_PAIR(b+1);
 	}
+	byte home_row_mode=0;
 	byte t;
 	byte threshold;
 	for(byte i=0;i<sizeof(type_str)-1;++i){
@@ -273,8 +276,17 @@ int main(int argc,char** argv){
 				type_str[i]=type_str[i+1];
 			}
 			type_str[sizeof(type_str)-2]=choose_from[rand()%(sizeof(choose_from)-1)];	
+			if(home_row_mode){
+				type_str[sizeof(type_str)-2]=home_row[rand()%(sizeof(home_row)-1)];	
+			}
 			--offset;
 			score+=(1<<level)*(1<<level)*(1<<level);
+		}
+		if(input=='h' && !home_row_mode){
+			home_row_mode=1;
+			for(byte i=0;i<sizeof(type_str)-1;++i){
+				type_str[i]=home_row[rand()%(sizeof(home_row)-1)];
+			}
 		}
 		if(input!=ERR){
 			flushinp();
