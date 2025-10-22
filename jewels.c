@@ -224,7 +224,7 @@ void draw(void){
 	mvvline(0,middle-2,a,LEN);
 	mvvline(0,middle+WID,a,LEN);
 	mvvline(0,middle+WID+1,a,LEN);
-	mvprintw(0,0,"Score:%d",score);
+	mvprintw(0,0,"Score:%ld",score);
 	mvaddstr(1,0,"Next:");
 	addch(next1);
 	addch(next2);

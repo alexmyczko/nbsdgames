@@ -377,12 +377,15 @@ int main(int argc,char** argv){
 		erase();
 		logo();
 		mvprintw(1,12,"Score:%ld",score);
-		if(immunity)
-			mvprintw(2,12,"Immunity:%ld",immunity);
-		else if(flight)
-			mvprintw(2,12,"Flight:%ld",flight);
-		else if(notrail)
-			mvprintw(2,12,"NoTrail:%ld",notrail);
+		if(immunity){
+			mvprintw(2,12,"Immunity:%d",immunity);
+		}
+		else if(flight){
+			mvprintw(2,12,"Flight:%d",flight);
+		}
+		else if(notrail){
+			mvprintw(2,12,"NoTrail:%d",notrail);
+		}
 		draw(board);
 		refresh();
 	
@@ -391,8 +394,9 @@ int main(int argc,char** argv){
 		if(input!=ERR)//hide message when a key is entered
 			pse_msg=0;
 
-		if(board[py][px]==SPAWN)
+		if(board[py][px]==SPAWN){
 			put_stuff(board,5);
+		}
 		else if(board[py][px]==BOMB){
 			explode(board,py,px);
 			for(byte b=0;b<10;++b){
@@ -410,14 +414,18 @@ int main(int argc,char** argv){
 			input=getch();
 			halfdelay(1);
 		}	
-		else if(board[py][px]==SUPERFOOD)
+		else if(board[py][px]==SUPERFOOD){
 			immunity+=len+wid;
-		else if(board[py][px]==FLIGHT)
+		}
+		else if(board[py][px]==FLIGHT){
 			flight+=FLIGHT_TIME;
-		else if(board[py][px]==NOTRAIL)
+		}
+		else if(board[py][px]==NOTRAIL){
 			notrail+=NOTRAIL_TIME;	
-		else
+		}
+		else{
 			goto NoFeatures;
+		}
 		board[py][px]=0;//if one of conditions is true, it executes! keep nagging about goto being redundant!
 
 		NoFeatures:
