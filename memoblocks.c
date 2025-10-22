@@ -239,7 +239,7 @@ int main(int argc,char** argv){
 		}
 	}
 	now=time(NULL)-tstart;
-	mvprintw(size+7,0,"Time spent: %d:%2d:%2d",now/3600,(now%3600)/60,now%60);
+	mvprintw(size+7,0,"Time spent: %ld:%2ld:%2ld",now/3600,(now%3600)/60,now%60);
 	mvprintw(size+5,0,"You solved it!");
 	printw(" Wanna play again?(y/n)");
 	refresh();

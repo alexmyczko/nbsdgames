@@ -92,7 +92,7 @@ void star_line(byte y){
 }
 void logo(){
 	mvprintw(0,0," _        ___  ");
-	mvprintw(1,0,"(_'        |     Score: %d",score);
+	mvprintw(1,0,"(_'        |     Score: %ld",score);
 	mvprintw(2,0,"._)QUARE (_:UMP  Combo: %d",combo);
 	addch('\n');
 }
@@ -315,14 +315,15 @@ byte shooting_scene(){
 void help(void){
 	nocbreak();
 	cbreak();
-	attron(colors[3]);
+	erase();
 	filled_rect(0,0,LEN,WID);
 	red_border();
 	mvprintw(1,HWID-4,"GAME PLAY");
-	mvprintw(3,1,"Jump from square to square.");
-	attroff(colors[3]);
+	mvprintw(3,1,"Jump from square to square using enter key.");
 	refresh();
+	flushinp();
 	getch();
+	usleep(5000000);
 	halfdelay(1);
 }
 void sigint_handler(int x){
