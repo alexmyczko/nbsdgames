@@ -48,13 +48,14 @@ char main_menu[]={
 	NB"darrt\n"
 	NB"miketron\n"
 	NB"muncher\n"
-	NB"battleship\n"
 	NB"scissor\n"
+	NB"reversi\n"
+	
+	NB"battleship\n"
 
 	NB"jewels\n"
 	NB"sudoku\n"
 	NB"mines\n"
-	NB"reversi\n"
 
 	NB"pipes"
 	NB"checkers\n"
@@ -68,7 +69,6 @@ char main_menu[]={
 	NB"redsquare\n"
 	NB"tugow\n"
 	NB"revenge\n"
-	NB"sjump\n"
 	NB"trsr\n"
 	
 	NB"revenge\n"
