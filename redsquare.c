@@ -27,7 +27,7 @@ byte py,px;
 byte cy,cx;//cross
 bool coherent;//square's coherence
 int anum,rnum;//reds and otherwise alive cell counts
-int stale_cells,stale_for;//throw new cells if it is stale for a long time
+int stale_cells,stale_for,incoherent_for;//throw new cells if it is stale for a long time
 long score;
 char msg[1000]={0};
 char msg_show=0;
@@ -167,7 +167,7 @@ void draw(byte board[RLEN][RWID]){
 	setup_scroll();
 	if(stale_for){
 		attron(colors[3]);
-		mvprintw(4,0,"%d",stale_for);
+		mvprintw(4,0,"%d",stale_for+(incoherent_for/STALE_LIMIT));
 		attroff(colors[3]);
 	}
 	for(y=beginy;y<beginy+view_len;++y){
@@ -181,7 +181,7 @@ void draw(byte board[RLEN][RWID]){
 			}
 			else{
 				if(get_cell(board,y,x)==ALIVE)
-					prnt=ACS_BLOCK;
+					prnt='#';
 				else if(get_cell(board,y,x)==RED){
 					if(coherent && (y==py||y==(py+LEN+1)%LEN)&& (x==px||x==(px+WID+1)%WID)){
 						prnt=' '|A_STANDOUT|colors[3];
@@ -659,6 +659,7 @@ int main(int argc,char** argv){
 	int prey,prex;
 	int cinred;
 	Start:
+	incoherent_for=0;
 	score=0;
 	level=0;
 	stale_cells=0;
@@ -727,6 +728,12 @@ int main(int argc,char** argv){
 			--msg_show;
 		}
 		refresh();
+		if(!coherent){
+			++incoherent_for;
+		}
+		else{
+			incoherent_for=0;
+		}
 		if(coherent || abs(stale_cells-(rnum+anum))>stale_cells/10){//if there is too much variation it is not stale
 			stale_cells=rnum+anum;
 			stale_for=0;
@@ -734,7 +741,7 @@ int main(int argc,char** argv){
 		else{
 			stale_for+=1;
 		}
-		if(stale_for>STALE_LIMIT){
+		if(stale_for>STALE_LIMIT || incoherent_for>STALE_LIMIT*5){
 			for(int i=0;i<10;++i){
 				board[rand()%LEN][rand()%WID]=RED;
 			}
@@ -742,6 +749,7 @@ int main(int argc,char** argv){
 				board[rand()%LEN][rand()%WID]=ALIVE;
 			}
 			stale_for=0;
+			incoherent_for=0;
 		}
 		if((rnum>anum && anum==0)||cinred==2){
 	
