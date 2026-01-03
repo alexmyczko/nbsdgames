@@ -288,6 +288,9 @@ int main(int argc,char** argv){
 				type_str[i]=home_row[rand()%(sizeof(home_row)-1)];
 			}
 		}
+		if(input=='q'){
+			break;
+		}
 		if(input!=ERR){
 			flushinp();
 			usleep(1e5);
