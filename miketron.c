@@ -274,23 +274,6 @@ void explode(byte board[len][wid],int by,int bx){
 		
 	}
 }
-void help(void){
-	nocbreak();
-	cbreak();
-	erase();
-	logo();
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE CONTROLS ****");
-	attroff(A_BOLD);
-	mvprintw(4,0,"hjkl/ARROW KEYS : Change direction");
-	mvprintw(5,0,"q : Quit");
-	mvprintw(6,0,"F1 & F2: Help on controls & gameplay");
-	mvprintw(8,0,"Press a key to continue");
-	refresh();
-	getch();
-	erase();
-	halfdelay(1);
-}
 void gameplay(void){
 	nocbreak();
 	cbreak();
@@ -307,6 +290,25 @@ void gameplay(void){
 	getch();
 	erase();
 	halfdelay(1);
+}
+
+void help(void){
+	nocbreak();
+	cbreak();
+	erase();
+	logo();
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE CONTROLS ****");
+	attroff(A_BOLD);
+	mvprintw(4,0,"hjkl/ARROW KEYS : Change direction");
+	mvprintw(5,0,"q : Quit");
+	mvprintw(6,0,"F1 & F2: Help on controls & gameplay");
+	mvprintw(8,0,"Press a key to continue");
+	refresh();
+	getch();
+	erase();
+	halfdelay(1);
+	gameplay();
 }
 void sigint_handler(int x){
 	endwin();

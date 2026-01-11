@@ -233,7 +233,6 @@ byte decide(byte board[len][wid],byte mines[len][wid]){
 void mine(byte mines[len][wid]){
 	int y=rand()%len;
 	int x=rand()%wid;
-	mines[py][px]=1;//so it doesn't place mines where you click first
 	for(int n=0;n<mscount;++n){
 		while(mines[y][x]){
 			y=rand()%len;
@@ -241,7 +240,6 @@ void mine(byte mines[len][wid]){
 		}
 		mines[y][x]=1;
 	}
-	mines[py][px]=0;
 }
 
 void sigint_handler(int x){
@@ -269,6 +267,20 @@ void mouseinput(int sy, int sx){
 		ungetch(' ');
 #endif
 }
+void gameplay(void){
+	erase();
+	logo(0,0);
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	mvprintw(4,0,"Like Mines but you need to find stuff\n");
+	printw("instead of avoiding them. Try to trick the AI\n");
+	printw("into doing useless stuff.\n");
+	refresh();
+	getch();
+	erase();
+}
+
 void help(void){
 	erase();
 	logo(0,0);
@@ -285,18 +297,7 @@ void help(void){
 	refresh();
 	getch();
 	erase();
-}
-void gameplay(void){
-	erase();
-	logo(0,0);
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	mvprintw(4,0,"Like Mines but you need to find stuff\n");
-	printw("instead of avoiding them.\n");
-	refresh();
-	getch();
-	erase();
+	gameplay();
 }
 int main(int argc, char** argv){
 	signal(SIGINT,sigint_handler);
@@ -384,6 +385,9 @@ int main(int argc, char** argv){
 	}
 	if(!mscount){
 		mscount=len*wid/8;
+	}
+	if(mscount%2==0){
+		mscount+=1;//there should not be a draw
 	}
 #else
 	mscount=len*wid/8;

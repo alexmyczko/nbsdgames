@@ -35,7 +35,6 @@ int usleep(long usec) {
 chtype colors[3]={0};
 long score=0;
 FILE* scorefile;
-
 chtype background[LEN][WID];
 
 int input;
@@ -377,7 +376,9 @@ int main(int argc,char** argv){
 	}
 	
 	make_background();
+	byte really_quit=0;
 	Start:
+	really_quit=0;
 	erase();
 	halfdelay(1);
 	curs_set(0);
@@ -402,8 +403,14 @@ int main(int argc,char** argv){
 			}
 		}
 		if(input=='Q'){
-			strcpy(msg,"ESC or Ctrl-C to quit.");
-			msg_show=50;
+			if(really_quit==0){
+				strcpy(msg,"ESC or Ctrl-C to quit.");
+				msg_show=50;
+				really_quit=1;
+			}
+			else{
+				break;
+			}
 		}
 		if(input==27){
 			break;

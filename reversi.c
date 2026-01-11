@@ -238,21 +238,6 @@ void mouseinput(void){
 		ungetch('\n');
 #endif
 }
-void help(void){
-	erase();
-	header();
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE CONTROLS ****");
-	mvprintw(8,0,"YOU CAN ALSO USE THE MOUSE!");
-	attroff(A_BOLD);
-	mvprintw(4,0,"RETURN/ENTER : Put the piece");
-	mvprintw(5,0,"hjkl/ARROW KEYS : Move cursor");
-	mvprintw(6,0,"q : Quit");
-	mvprintw(7,0,"F1 & F2 : Help on controls & gameplay");
-	mvprintw(10,0,"Press a key to continue");
-	curs_set(1);
-	getch();
-}
 void gameplay(void){
 	erase();
 	header();
@@ -270,6 +255,22 @@ void gameplay(void){
 	printw("3) The game ends when neither side can do a move and\n");
 	printw("   the player with more pieces wins.\n");
 	getch();
+}
+
+void help(void){
+	erase();
+	header();
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE CONTROLS ****");
+	mvprintw(8,0,"YOU CAN ALSO USE THE MOUSE!");
+	attroff(A_BOLD);
+	mvprintw(4,0,"RETURN/ENTER : Put the piece");
+	mvprintw(5,0,"hjkl/ARROW KEYS : Move cursor");
+	mvprintw(6,0,"q : Quit");
+	mvprintw(7,0,"F1 & F2 : Help on controls & gameplay");
+	mvprintw(10,0,"Press a key to continue");
+	getch();
+	gameplay();
 }
 int main(int argc , char** argv){
 	int depth=-1;

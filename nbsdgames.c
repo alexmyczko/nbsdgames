@@ -57,7 +57,7 @@ char main_menu[]={
 	NB"sudoku\n"
 	NB"mines\n"
 
-	NB"pipes"
+	NB"pipes\n"
 	NB"checkers\n"
 	NB"rabbithole\n"
 
@@ -66,9 +66,7 @@ char main_menu[]={
 	NB"sos\n"
 	NB"fifteen\n"
 	NB"memoblocks\n"
-	NB"redsquare\n"
 	NB"tugow\n"
-	NB"revenge\n"
 	NB"trsr\n"
 	
 	NB"revenge\n"
@@ -104,7 +102,6 @@ char name[100]={0};
 void fancy_background(){
 	int y,x;
 	int lines=LINES,cols=COLS;
-	#define ABS(x) (((x)<0)?-(x):(x))
 	for(y=0;y<lines;++y){
 		for(x=0;x<cols;++x){
 			mvaddch(y,x,'#'|colors[abs((abs((y-lines/2)*(y-lines/2)/10)+x)/10)%4]);
@@ -175,27 +172,6 @@ void show_scores(FILE* score_file){
 	fclose(score_file);
 	flushinp();
 	getch();
-}
-void help(void){
-	int lines=LINES,cols=COLS;
-	nocbreak();
-	cbreak();
-	attron(colors[3]);
-	filled_rect(0,0,LINES,cols);
-	green_border();
-	mvprintw(1,(cols/2)-4,"GAME PLAY");
-	mvprintw(3,1,"Catch a fish and reel it in for points");
-	mvprintw(4,1,"The deeper the fish, the more points it is worth.");
-	mvprintw(5,1,"If a fish hits your line, you lose a hook.");
-	mvprintw(6,1,"When you run out of hooks, the game is over!");
-	mvprintw(8,(cols/2)-4,"CONTROLS");
-	mvprintw(10,1,"UP & DOWN: Control the hook");
-	mvprintw(11,1,"q: Quit");
-	mvprintw(13,1,"This is a port of \"Deep Sea Fisher\", a MikeOS game.");
-	attroff(colors[3]);
-	refresh();
-	getch();
-	halfdelay(1);
 }
 void sigint_handler(int x){
 	endwin();
@@ -362,13 +338,12 @@ int main(int argc,char** argv){
 	if(argc>1){
 		printf("This game doesn't take arguments");
 	}
-	char path[1000];
-	snprintf(path,999,"%s:.",path);//include current dir at the end
 	signal(SIGINT,sigint_handler);
 	initscr();
 	noecho();
 	cbreak();
 	keypad(stdscr,1);
+	char path[104];
 	srand(time(NULL)%UINT_MAX);
 	if(has_colors()){
 		start_color();
@@ -397,14 +372,15 @@ int main(int argc,char** argv){
 				def_prog_mode();
 				endwin();
 				get_entry(main_menu,choice,choice_str);
-				system(choice_str);
+				if(system(choice_str) == 32512){
+					snprintf(path,103,"./%s",choice_str);
+					system(path);
+				}
 				reset_prog_mode();
 			break;
 		}
 	}
 	curs_set(1);
-	//show_scores(save_score());
-
 	endwin();
 	return 0;
 }

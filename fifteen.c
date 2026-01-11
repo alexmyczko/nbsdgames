@@ -155,6 +155,19 @@ void mouseinput(void){
 		ungetch('\n');
 #endif
 }
+void gameplay(void){
+	erase();
+	logo(0,0);
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	mvprintw(4,0,"Slide the tiles until the numbers and characters are\n");
+	printw("in the right order.\n");
+	refresh();
+	getch();
+	erase();
+}
+
 void help(void){
 	erase();
 	logo(0,0);
@@ -170,18 +183,7 @@ void help(void){
 	refresh();
 	getch();
 	erase();
-}
-void gameplay(void){
-	erase();
-	logo(0,0);
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	mvprintw(4,0,"Slide the tiles until the numbers and characters are\n");
-	printw("in the right order.\n");
-	refresh();
-	getch();
-	erase();
+	gameplay();
 }
 int main(int argc, char** argv){
 	int opt;

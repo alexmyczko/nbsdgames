@@ -429,12 +429,13 @@ void help(void){
 	attron(colors[3]);
 	filled_rect(0,0,LEN,WID);
 	magenta_border();
+	mvaddstr(1,WID/2-4,"GAMEPLAY");
 	mvprintw(3,1,"This is rock-paper-scissor game evolved to a");
 	mvprintw(4,1,"super-hyper-great live action strategy game.");
 	mvprintw(5,1,"You have extra lives as long as there are scissors");
-	mvprintw(6,1,"on screen. hit and dodge rocks and papers and manage");
+	mvprintw(6,1,"on screen. Hit and dodge rocks and papers and manage");
 	mvprintw(7,1,"their populations. The more you hit, the more you win.");
-	mvprintw(8,1,"Patience and vigilance could lead to a very high scores.");
+	mvprintw(8,1,"Patience and vigilance could lead to very high scores.");
 	attroff(colors[3]);
 	refresh();
 	getch();

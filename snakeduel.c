@@ -420,6 +420,22 @@ void draw(byte board[len][wid]){
 		}
 	}
 }
+void gameplay(void){
+	nocbreak();
+	cbreak();
+	erase();
+	logo();
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	move(4,0);
+	printw("Don't hit the walls, the other snake and yourself. Kill the other snake.\n");
+	refresh();
+	getch();
+	erase();
+	halfdelay(1);
+}
+
 void help(void){
 	nocbreak();
 	cbreak();
@@ -436,21 +452,7 @@ void help(void){
 	getch();
 	erase();
 	halfdelay(1);
-}
-void gameplay(void){
-	nocbreak();
-	cbreak();
-	erase();
-	logo();
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	move(4,0);
-	printw("Don't hit the walls, the other snake and yourself. Kill the other snake.\n");
-	refresh();
-	getch();
-	erase();
-	halfdelay(1);
+	gameplay();
 }
 void sigint_handler(int x){
 	endwin();

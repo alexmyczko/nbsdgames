@@ -132,6 +132,22 @@ void mouseinput(void){
 		ungetch('\n');
 #endif
 }
+void gameplay(void){
+	erase();
+	logo(0,0);
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	mvprintw(4,0,"Click on a tile to see the glyph it contains,\n");
+	printw(      "then try to find a matching glyph the same way.\n");
+	printw(      "They form a pair only when you click a tile\n");
+	printw(	     "directly after the match. The game ends when \n");
+	printw(	     "you have found all the matching pairs.\n");
+	refresh();
+	getch();
+	erase();
+}
+
 void help(void){
 	erase();
 	logo(0,0);
@@ -147,21 +163,7 @@ void help(void){
 	refresh();
 	getch();
 	erase();
-}
-void gameplay(void){
-	erase();
-	logo(0,0);
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	mvprintw(4,0,"Click on a tile to see the glyph it contains,\n");
-	printw(      "then try to find a matching glyph the same way.\n");
-	printw(      "They form a pair only when you click a tile\n");
-	printw(	     "directly after the match. The game ends when \n");
-	printw(	     "you have found all the matching pairs.\n");
-	refresh();
-	getch();
-	erase();
+	gameplay();
 }
 int main(int argc,char** argv){
 	if(argc>1){

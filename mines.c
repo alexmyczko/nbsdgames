@@ -199,6 +199,26 @@ void mouseinput(int sy, int sx){
 		ungetch(' ');
 #endif
 }
+void gameplay(void){
+	erase();
+	mvprintw(1,0,"|\\/|");
+	mvprintw(2,0,"|  |INES");
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	mvprintw(4,0,"Try to find the landmines in the field\n");
+	printw("using logical reasoning: When you click\n");
+	printw("on a tile ( a '.' here), numbers may show\n");
+	printw("up that indicate the number of landmines\n");
+	printw("in adjacent tiles; you should find and \n");
+	printw("avoid the landmines based on them; and\n");
+	printw("clicking on a landmine would make you\n");
+	printw("lose the game.");
+	refresh();
+	getch();
+	erase();
+}
+
 void help(void){
 	erase();
 	mvprintw(1,0,"|\\/|");
@@ -217,25 +237,7 @@ void help(void){
 	refresh();
 	getch();
 	erase();
-}
-void gameplay(void){
-	erase();
-	mvprintw(1,0,"|\\/|");
-	mvprintw(2,0,"|  |INES");
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	mvprintw(4,0,"Try to find the landmines in the field\n");
-	printw("with logical reasoning: When you click\n");
-	printw("on a tile ( a '.' here), numbers may show\n");
-	printw("up that indicate the number of landmines\n");
-	printw("in adjacent tiles; you should find and \n");
-	printw("avoid the landmines based on them; and\n");
-	printw("clicking on a landmine would make you\n");
-	printw("lose the game.");
-	refresh();
-	getch();
-	erase();
+	gameplay();
 }
 int main(int argc, char** argv){
 	signal(SIGINT,sigint_handler);

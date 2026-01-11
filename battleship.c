@@ -487,6 +487,20 @@ void decide(bool side){// sink_announce is responsible for unsetting the global 
 		}	
 	}
 }
+void gameplay(bool side){//side is only there to feed header()
+	erase();
+	header(side);
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	move(4,0);
+	printw("Guess the location of your opponent's\n");
+	printw("ships and sink them! The player\n");
+	printw("who sinks all the opponent's ships wins.");
+	getch();
+	erase();
+}
+
 void help(bool side){//side is only there to feed header()
 	erase();
 	header(side);
@@ -502,19 +516,7 @@ void help(bool side){//side is only there to feed header()
 	mvprintw(11,0,"Press a key to continue");
 	getch();
 	erase();
-}
-void gameplay(bool side){//side is only there to feed header()
-	erase();
-	header(side);
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	move(4,0);
-	printw("Guess the location of your opponent's\n");
-	printw("ships and sink them! The player\n");
-	printw("who sinks all the opponent's ships wins.");
-	getch();
-	erase();
+	gameplay(side);
 }
 int main(int argc,char** argv){
 	if(argc>1){

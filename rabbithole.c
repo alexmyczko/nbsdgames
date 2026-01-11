@@ -132,6 +132,24 @@ void carrotify(bitbox board[len][wid],int count){
 		--c;
 	}
 }
+void gameplay(void){
+	erase();
+	mvprintw(0,0," _ ");
+	mvprintw(1,0,"|_)");
+	mvprintw(2,0,"| \\ABBITHOLE");
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	move(4,0);
+	printw("Try to gather all the carrots in the maze\n");
+	printw("in the given time. The determining factors\n");
+	printw("are your choice of paths and the speed of\n ");
+	printw("your fingers.\n");
+	refresh();
+	while ( getch()==ERR );
+	erase();
+}
+
 void help(void){
 	erase();
 	mvprintw(0,0," _ ");
@@ -149,23 +167,7 @@ void help(void){
 	refresh();
 	while ( getch()==ERR );
 	erase();
-}
-void gameplay(void){
-	erase();
-	mvprintw(0,0," _ ");
-	mvprintw(1,0,"|_)");
-	mvprintw(2,0,"| \\ABBITHOLE");
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	move(4,0);
-	printw("Try to gather all the carrots in the maze\n");
-	printw("in the given time. The determining factors\n");
-	printw("are your choice of paths and the speed of\n ");
-	printw("your fingers.\n");
-	refresh();
-	while ( getch()==ERR );
-	erase();
+	gameplay();
 }
 void sigint_handler(int x){
 	endwin();

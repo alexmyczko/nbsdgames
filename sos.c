@@ -205,6 +205,25 @@ void mouseinput(int sy,int sx){
 		ungetch('O');
 #endif
 }
+void gameplay(void){
+	erase();
+	mvprintw(0,0," _  _  _");
+	mvprintw(1,0,"(_'| |(_' ");
+	mvprintw(2,0,"._):_:._) ");
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+	move(4,0);
+	printw("The game is similar to Tic Tac Toe:\n");
+	printw("The players write S and O in the fields\n");
+	printw("and making the straight connected sequence\n");
+	printw("S-O-S makes you a score; obviously, the\n");
+	printw("player with a higher score wins.");
+	refresh();
+	getch();
+	erase();
+}
+
 void help(void){
 	erase();
 	mvprintw(0,0," _  _  _");
@@ -223,24 +242,7 @@ void help(void){
 	refresh();
 	getch();
 	erase();
-}
-void gameplay(void){
-	erase();
-	mvprintw(0,0," _  _  _");
-	mvprintw(1,0,"(_'| |(_' ");
-	mvprintw(2,0,"._):_:._) ");
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
-	move(4,0);
-	printw("The game is similar to Tic Tac Toe:\n");
-	printw("The players write S and O in the fields\n");
-	printw("and making the straight connected sequence\n");
-	printw("S-O-S makes you a score; obviously, the\n");
-	printw("player with a higher score wins.");
-	refresh();
-	getch();
-	erase();
+	gameplay();
 }
 int main(int argc, char** argv){
 	int dpt=-1;

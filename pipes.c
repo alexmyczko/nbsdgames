@@ -251,6 +251,24 @@ void sigint_handler(int x){
 	puts("Quit.");
 	exit(x);
 }
+void gameplay(void){
+	erase();
+	logo();
+	attron(A_BOLD);
+	mvprintw(SY,SX+5,"-*            *-");
+	mvprintw(3,0," HELP");
+	mvprintw(4,0," PAGE");
+	attroff(A_BOLD);
+	attron(green);
+	mvprintw(SY,SX+7,"THE GAMEPLAY");
+	attroff(green);
+	mvprintw(SY+1,SX,"Keep maintaining the pipeline and");
+	mvprintw(SY+2,SX,"don't let the sewage leak.");
+	refresh();
+	while(getch()==ERR);
+	erase();
+}
+
 void help(void){
 	erase();
 	logo();
@@ -274,23 +292,7 @@ void help(void){
 	refresh();
 	while(getch()==ERR);
 	erase();
-}
-void gameplay(void){
-	erase();
-	logo();
-	attron(A_BOLD);
-	mvprintw(SY,SX+5,"-*            *-");
-	mvprintw(3,0," HELP");
-	mvprintw(4,0," PAGE");
-	attroff(A_BOLD);
-	attron(green);
-	mvprintw(SY,SX+7,"THE GAMEPLAY");
-	attroff(green);
-	mvprintw(SY+1,SX,"Keep maintaining the pipeline and");
-	mvprintw(SY+2,SX,"don't let the sewage leak.");
-	refresh();
-	while(getch()==ERR);
-	erase();
+	gameplay();
 }
 int main(int argc, char** argv){
 	signal(SIGINT,sigint_handler);

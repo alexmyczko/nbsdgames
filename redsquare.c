@@ -43,7 +43,30 @@ void logo(void){
 	move(0,0);
 	addstr(" _   _\n");
 	addstr("|_) (_\n");
-	addstr("| \\ED_)QUARE");
+	addstr("| \\ED_)QUARE\n");
+}
+
+int avoid_accidental_pass(){
+	int input;
+	Again:
+	input=getch();
+	if( input==ERR){
+		goto Again;
+	}
+	if( (input=='k' || (input==KEY_UP||input=='w'))){
+		goto Again;
+	}
+	else if( (input=='j' || (input==KEY_DOWN||input=='s')) ){
+		goto Again;
+	}
+	else if( (input=='h' || (input==KEY_LEFT||input=='a'))){
+		goto Again;
+	}
+	else if( (input=='l' || (input==KEY_RIGHT||input=='d'))){
+		goto Again;
+	}
+	return input;
+
 }
 
 byte save_score(void){
@@ -53,6 +76,8 @@ byte save_score(void){
 void show_scores(byte playerrank){
 	erase();
 	logo();
+	nocbreak();
+	cbreak();
 	if(playerrank==FOPEN_FAIL){
 		mvaddstr(3,0,"Couldn't open scorefile.");
 		printw("\nHowever, your score is %ld.",score);
@@ -80,6 +105,7 @@ void show_scores(byte playerrank){
 			printw("*************************\n");
 			printw("Press a key to proceed:");
 			move(4,0);
+			attron(A_BOLD);
 			mvprintw(4,0, "     _____ ");
 			mvprintw(5,0, "   .'     |");
 			mvprintw(6,0, " .'       |");
@@ -89,10 +115,13 @@ void show_scores(byte playerrank){
 			mvprintw(10,0,"  ___|    |___");
 			mvprintw(11,0," |            |");
 			mvprintw(12,0," |____________|");
+			attroff(A_BOLD);
 			nocbreak();
 			cbreak();
-			erase();
 			logo();
+			refresh();
+			avoid_accidental_pass();
+			erase();
 		}
 	}
 	//scorefile is still open with w+
@@ -101,6 +130,7 @@ void show_scores(byte playerrank){
 	long pscore=0;
 	byte rank=0;
 	rewind(score_file);
+	logo();
 	printw(">*>*>Top %d<*<*<\n",SAVE_TO_NUM);
 	while( rank<SAVE_TO_NUM && fscanf(score_file,"%s : %ld\n",pname,&pscore) == 2){
 		if(rank == playerrank)
@@ -110,6 +140,10 @@ void show_scores(byte playerrank){
 	}
 	addch('\n');
 	refresh();
+	avoid_accidental_pass();
+	avoid_accidental_pass();
+	
+	halfdelay(1);
 }
 
 
@@ -550,6 +584,33 @@ void sigint_handler(int x){
 	if(minput.bstate & (BUTTON2_CLICKED|BUTTON3_CLICKED) )
 		ungetch(' ');
 }*/
+void gameplay(void){
+	erase();
+	logo();
+	nocbreak();
+	attron(A_BOLD);
+	mvprintw(3,0,"  **** THE GAMEPLAY ****");
+	attroff(A_BOLD);
+
+	mvprintw(4,0,"See order in the chaos and use the predictable to \n");
+	printw(      "prepare for the unpredictable.\n");
+	printw(      "Learn from your mistake and try again and again.\n\n");
+
+	printw(      "Move the square and catch the X or outnumber the\n");
+	printw(      "white cells with those of your own,\n");
+	printw(      "in the environment of Conway's game of life.\n");
+	printw(       "\nHint: You can try doing the trick below, and more:\n\n");
+
+	printw(      "                               OO  ##\n");
+	printw(      "                               OO #  #\n");
+	printw(      "                                   ## \n");
+	refresh();
+	cbreak();
+	getch();
+	halfdelay(1);
+	erase();
+}
+
 void help(void){
 	erase();
 	logo();
@@ -564,58 +625,11 @@ void help(void){
 	refresh();
 	cbreak();
 	getch();
+	gameplay();
 	halfdelay(1);
 	erase();
 }
-void gameplay(void){
-	erase();
-	logo();
-	nocbreak();
-	attron(A_BOLD);
-	mvprintw(3,0,"  **** THE GAMEPLAY ****");
-	attroff(A_BOLD);
 
-	mvprintw(4,0,"See order in chaos and use the predictable to \n");
-	printw(      "prepare for the unpredictable.\n");
-	printw(      "Learn from your mistake and try again and again.\n\n");
-
-	printw(      "Move the square and catch the X or outnumber the\n");
-	printw(      "white cells with those of your own,\n");
-	printw(      "in the environment of Conway's game of life.\n");
-	printw(      "Learn from your mistake and try again and again.\n");
-	printw(       "\nHint: You can try doing the trick below, and more:\n\n");
-
-	printw(      "                               OO  ##\n");
-	printw(      "                               OO #  #\n");
-	printw(      "                                   ## \n");
-	refresh();
-	cbreak();
-	getch();
-	halfdelay(1);
-	erase();
-}
-int avoid_accidental_pass(){
-	int input;
-	Again:
-	input=getch();
-	if( input==ERR){
-		goto Again;
-	}
-	if( (input=='k' || (input==KEY_UP||input=='w'))){
-		goto Again;
-	}
-	else if( (input=='j' || (input==KEY_DOWN||input=='s')) ){
-		goto Again;
-	}
-	else if( (input=='h' || (input==KEY_LEFT||input=='a'))){
-		goto Again;
-	}
-	else if( (input=='l' || (input==KEY_RIGHT||input=='d'))){
-		goto Again;
-	}
-	return input;
-
-}
 void camera_on_reds(byte board[LEN][WID]){
 	int y,x;
 	for(y=0;y<RLEN;++y){
