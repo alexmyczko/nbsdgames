@@ -279,7 +279,6 @@ byte save_score(void){
 }
 
 void show_scores(byte playerrank){
-	attron(colors[3]);
 	filled_rect(0,0,LEN,WID);
 	red_border();
 	if(playerrank==FOPEN_FAIL){
@@ -323,7 +322,6 @@ void show_scores(byte playerrank){
 	byte rank=0;
 	rewind(score_file);	
 	mvaddstr(1,WID/2-4,"HIGH SCORES");
-	attron(colors[3]);
 	while( rank<SAVE_TO_NUM && fscanf(score_file,"%s : %ld\n",pname,&pscore) == 2){
 		star_line(2+2*rank);
 		move(2+2*rank,1);
@@ -333,20 +331,17 @@ void show_scores(byte playerrank){
 		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 	}
-	attroff(colors[3]);
 	refresh();
 }
 void help(void){
 	nocbreak();
 	cbreak();
-	attron(colors[3]);
 	filled_rect(0,0,LEN,WID);
 	red_border();
 	mvprintw(1,HWID-4,"GAME PLAY");
 	mvprintw(3,1,"If you hit a letter on keyboard, the letter on the");
 	mvprintw(4,1,"screen will soon stop. You have to aim for the");
 	mvprintw(5,1,"center of the target using the moving letters.");
-	attroff(colors[3]);
 	refresh();
 	getch();
 	halfdelay(1);

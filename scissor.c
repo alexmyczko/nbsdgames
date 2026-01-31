@@ -366,7 +366,6 @@ byte save_score(void){
 }
 
 void show_scores(byte playerrank){
-	attron(colors[3]);
 	filled_rect(0,0,LEN,WID);
 	magenta_border();
 	if(playerrank==FOPEN_FAIL){
@@ -410,7 +409,6 @@ void show_scores(byte playerrank){
 	byte rank=0;
 	rewind(score_file);	
 	mvaddstr(1,WID/2-4,"HIGH SCORES");
-	attron(colors[3]);
 	while( rank<SAVE_TO_NUM && fscanf(score_file,"%s : %ld\n",pname,&pscore) == 2){
 		star_line(2+2*rank);
 		move(2+2*rank,1);
@@ -420,13 +418,11 @@ void show_scores(byte playerrank){
 		mvprintw(2+2*rank,WID-1-digit_count(pscore),"%ld",pscore);
 		++rank;
 	}
-	attroff(colors[3]);
 	refresh();
 }
 void help(void){
 	nocbreak();
 	cbreak();
-	attron(colors[3]);
 	filled_rect(0,0,LEN,WID);
 	magenta_border();
 	mvaddstr(1,WID/2-4,"GAMEPLAY");
@@ -436,7 +432,6 @@ void help(void){
 	mvprintw(6,1,"on screen. Hit and dodge rocks and papers and manage");
 	mvprintw(7,1,"their populations. The more you hit, the more you win.");
 	mvprintw(8,1,"Patience and vigilance could lead to very high scores.");
-	attroff(colors[3]);
 	refresh();
 	getch();
 	halfdelay(1);
