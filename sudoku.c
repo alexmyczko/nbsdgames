@@ -489,6 +489,11 @@ int main(int argc,char** argv){
 		if((input==KEY_F(2)||input=='!')){
 			gameplay();
 		}
+		if(input == '\n' || input == KEY_ENTER){
+			if(empty[py][px]==0){
+				game[py][px]=int2sgn((sgn2int(game[py][px])+1)%(s+1));
+			}
+		}
 		if(input == KEY_MOUSE)
 			mouseinput(sy,sx);
 		if(input == KEY_UP && py)
@@ -499,7 +504,7 @@ int main(int argc,char** argv){
 			--px;
 		if((input==KEY_RIGHT||input=='d') && px<s-1)
 			++px;
-		if(!empty[py][px]){
+		if(empty[py][px]==0){
 			if(input == ' ' )
 				game[py][px]=0;
 			else if(input<=CHAR_MAX && sgn2int(input) && sgn2int(input)<=s )
