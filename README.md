@@ -30,6 +30,9 @@ The games include:
 * Darrt (with original gameplay!)
 * Snakeduel
 * Tugow (Numpad practice game)
+* Trsr (Two-player minesweeper)
+* Scissor (Rock-paper-scissor made into an original and unique gameplay. A genre of its own)
+* Revenge
 
 The difficulty and/or dimensions are adjustable through simple command line options, you can play a minesweeper game that take hours to complete, or exprience hexadecimal sudoku and 8x8 fifteen-like puzzles!
 
@@ -38,7 +41,19 @@ The difficulty and/or dimensions are adjustable through simple command line opti
  
 Play on xterm for best experience.
 
-## Prerequisites
+## Packages
+
+It's on almost every repo by now: Debian (and other DEBs), OpenSUSE (and other RPMs), AUR, Alpine, FreeBSD, NetBSD, DragonflyBSD, Minix, Homebrew (MacOSX) and more 
+https://repology.org/project/nbsdgames/versions
+
+Thanks to Elias Riedel Gårding, Zinjanthropus, Gürkan Myczko, Robert Clausecker, Sam James, and so many other nice people for packaging.
+
+They also gave back code and useful feedback.
+
+
+## How to compile
+
+Have 
 
 * git (optional)
 * POSIX make (optional)
@@ -51,7 +66,6 @@ To install them all on debian-base :
 ``` sh
         sudo apt install git make gcc libncurses5-dev
 ```
-## How to run
 
 1) Download the files
 2) Go to the sources directory
