@@ -175,7 +175,26 @@ void cp(char A[8][8],char B[8][8]){//copy the board A to B
 		for(byte x=0;x<8;++x)
 			B[y][x]=A[y][x];
 }
-
+double win_or_lose(char board[8][8],char piece,char opponent){
+	byte own_score=0;
+	for(byte y=0;y<8;++y){
+		for(byte x=0;x<8;++x){
+			if(board[y][x]==piece){
+				++own_score;
+			}
+			if(board[y][x]==opponent){
+				--own_score;
+			}
+		}
+	}
+	if(own_score>0){
+		return 1000000;
+	}
+	else{
+		return 1/1000000;
+	}
+}
+			
 double decide(char board[8][8],char piece,char opponent,byte depth){//AI algorithm
 	if(!can_move(board,piece))
 		return 0;
@@ -197,7 +216,12 @@ double decide(char board[8][8],char piece,char opponent,byte depth){//AI algorit
 						adv = 1/adv;
 					}
 					else{
-						adv=advantage(plan,piece);
+						if(!can_move(board,piece)){//if neither AI nor the opponent can make a move, this is a conclusion to the game
+							adv=win_or_lose(board,piece,opponent);
+						}
+						else{
+							adv=advantage(plan,piece);
+						}
 					}
 				}
 				else{
@@ -361,8 +385,13 @@ int main(int argc , char** argv){
 	game[4][4]=piece[0];
 	game[3][4]=piece[1];
 	game[4][3]=piece[1];
-
 	Turn:
+	if(side[0]=='c' &&side[1]=='c'){//make AI vs AI games more variable and interesting
+		fixed_starting_depth=1;
+		depth=4+(rand()%2);
+		py=px=9;//visual nuisance removed
+	}
+	
 	srand(time(NULL)%UINT_MAX);
 	erase();
 	flushinp();
