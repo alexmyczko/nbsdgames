@@ -139,7 +139,7 @@ Windows
 ![Screenshot from the games in Windows 7](https://raw.githubusercontent.com/abakh/junk/master/screenshot_windows.jpg)
 
 ## How to contribute
-* Share these with your friends and others
+* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber to do the same)
 * Your stars make the repo more findable in Github :star:
 * Tell me your feature requests, bug reports, etc.
 * Tell me the games you want to be added (but in the same genre, I can't port Angry Birds to curses! :)
