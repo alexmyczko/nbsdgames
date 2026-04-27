@@ -294,6 +294,29 @@ void help(void){
 	erase();
 	gameplay();
 }
+int avoid_accidental_pass(){
+	int input;
+	Again:
+	input=getch();
+	if( input==ERR){
+		goto Again;
+	}
+	if( (input=='k' || (input==KEY_UP||input=='w'))){
+		goto Again;
+	}
+	else if( (input=='j' || (input==KEY_DOWN||input=='s')) ){
+		goto Again;
+	}
+	else if( (input=='h' || (input==KEY_LEFT||input=='a'))){
+		goto Again;
+	}
+	else if( (input=='l' || (input==KEY_RIGHT||input=='d'))){
+		goto Again;
+	}
+	return input;
+
+}
+
 int main(int argc, char** argv){
 	signal(SIGINT,sigint_handler);
 	initscr();
@@ -457,11 +480,11 @@ int main(int argc, char** argv){
 	attroff(A_BOLD|green);
 	draw(board);
 	mvprintw(len+2,0,"Game over! Press a key to see the high scores:");
-	getch();
+	avoid_accidental_pass();
 	show_scores(save_score());
 	mvprintw(len+2,0,"Game over!");
 	printw(" Wanna play again?(y/n)");
-	input=getch();
+	input=avoid_accidental_pass();
        	if( input!= 'N' &&  input!= 'n' && input!='q')
 		goto Start;
 	endwin();
