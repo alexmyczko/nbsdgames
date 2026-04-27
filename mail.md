@@ -1,0 +1,39 @@
+First of all, thanks for reading and sorry if this email reaches you multiple times, your distro's fans might agree too much with the points made below. This 2-minutes read is about the zero-cost but influential and significantly beneficial decision to include the 93.7 kB package of nbsdgames (which are 21 games with a lot of variety, creativity, endless gameplay and a menu icon) as default games on your distro (maybe alongside or instead of the other games you include, if you already do).
+
+Here are some reasons for doing so (arguably it is more important than the important calculator app you probably already include) along with answers to common questions that might arise:
+
+* The way any user would feel about any product including your OS, is very dependent on the first impression it makes. Technical problems and learning curves are also very common. If you include games in your OS, their first impression would be "dozens of cool stuff, followed by one or two problems" however if you don't include games the first impression would be almost entirely made of the problems and difficulties they would face and they would not like and talk positively about your OS (similar to the way many people feel about vim because they couldn't manage to exit it the first time)
+
+* It is something exotic that Windows doesn't have and your users can show their not-techy-yet friends to evoke their interest.
+
+* Its cost is a fraction of a megabyte, less than a wallpaper, its benefit is many hours of positive user experience for many people who try your distro.
+
+* I have seen a lot of users (including programmers) avoid Linux because they fear the command-line, and they don't learn the command-line because they don't begin to use it. Terminal games make them begin to use the Terminal and make the impression that the Terminal is cool, easy and usable.
+
+* A lot of users try OSes on VMs. A lot of people dual-boot OSes with Windows. I have seen that default games give them motivation to boot the OS more than once, play the games and also see and try other things there.
+
+* These can motivate non-techy people to install Linux on their old PCs so children could play and tinker with them (it did happen back when Windows included games) few years later those children could be benefiting you and others because it made them try Linux more.
+
+* As I said, technical problems are common. A lot of them are significant annoyances (network problems, dual-boot difficulties) that last many hours for the users and could make them give up. Games are good mental rests that make it go easy. People in NetBSD made a good choice when they put a tetris game in their /rescue directory.
+
+* Minimal programs like this are good at propagating the Unix philosophy, "KISS", and the important reality that one small program might do a job better than many much bigger inefficient programs. If I were to show how Free Software managed to perform better than commercial products, I would begin with introducing such concepts.
+
+FAQ:
+
++ Why Windows and phone vendors stopped shipping games?
+
+- The games on old phones and old Windows versions were popular however since their "new looking" games started becoming too heavy they stopped being justifiable (the latest minesweeper is like 100 MB, not to mention other games). They also make money from their spyware social media apps and other stuff that compete with games over the user's boredom and attention. They also needed to pay their game developers, unlike the free and open source nbsdgames.
+
++ Not many people asked us for games.
+
+- Supply often precedes demand. Nobody asks an empty store to give them the stuff they need. Most inventions were probably not asked for. Same applies here.
+
++ People can install games themselves.
+
+- Default applications (like your default browser, default office suite, bluetooth wizard and other stuff) exist because the user can't predict and prepare exactly everything they would need later on, and they wouldn't have the time and energy to search and compare every possible choice at the second they need something. Good defaults are a significant help everywhere. 
+
++ We already have games.
+
+- The cute little nbsdgames could be a good friend for them. It also has much less size and far more varied gameplay and more colorful looks than the default games I have seen. It is also important to note that games are there to entertain people, and some packages aren't good at the purpose they should serve. For example they include very few games with very repetitive gameplay that are not interesting for more than minutes, not being "easy to learn and hard to master". For instance I like sgt-puzzles because the package is open-source however it is too gray and entirely slow-paced and I couldn't figure out how to play most of them back when I was bored enough to try them out. However nbsdgames has fast-paced games, slow-paced games, easy games, hard games, puzzle games, focus games, so on. When you get tired of one game you can play all the others.
+
+I hope you realize that I make this points because it is a good package not because it is my package (same applies to the person who sent you this email). I did it because I thought it is a good thing to do and it seems that it is so.
