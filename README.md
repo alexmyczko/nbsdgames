@@ -139,12 +139,12 @@ Windows
 ![Screenshot from the games in Windows 7](https://raw.githubusercontent.com/abakh/junk/master/screenshot_windows.jpg)
 
 ## How to contribute
-* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber to do the same)
+* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber and blogger to do the same)
 * Your stars make the repo more findable in Github :star:
 * Tell me your feature requests, bug reports, etc.
 * Tell me the games you want to be added (but in the same genre, I can't port Angry Birds to curses! :)
 * Make a package for your distro (or put it on repos if the package is not there)
-* Tell distro developers to consider adding these as default games, nbsdgames packs a lot of fun games in a few hundreds of kilobytes.
+* Tell distro developers to consider adding these as *default games*, read and send them the **mail.md** text.
 * Compile these with ASAN, play and find C-ish bugs.
 
 Also thanks to all the people who helped in the previous versions, all what I requested was done! I didn't expect such an amount of assistance on this project :heart:
