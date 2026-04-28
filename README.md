@@ -139,12 +139,17 @@ Windows
 ![Screenshot from the games in Windows 7](https://raw.githubusercontent.com/abakh/junk/master/screenshot_windows.jpg)
 
 ## How to contribute
-* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber and blogger to do the same)
+* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber and blogger to share these)
 * Your stars make the repo more findable in Github :star:
 * Tell me your feature requests, bug reports, etc.
 * Tell me the games you want to be added (but in the same genre, I can't port Angry Birds to curses! :)
 * Make a package for your distro (or put it on repos if the package is not there)
 * Tell distro developers to consider adding these as *default games*, read and send them the **mail.md** text.
 * Compile these with ASAN, play and find C-ish bugs.
+* Make a touch-friendly, minimal, mostly visually similar version using cairo and/or basic Qt components
+* Make a retroarch core (It would be easy to port PDCurses to retroarch)
+* Port miketron and redsquare to PSX or Sega Genesis or whatever old console
+* Find people who do these kind of stuff and suggest to them to do so
+* It would be good if you CC0 your code too.
 
 Also thanks to all the people who helped in the previous versions, all what I requested was done! I didn't expect such an amount of assistance on this project :heart:
