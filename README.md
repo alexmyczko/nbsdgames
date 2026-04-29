@@ -130,7 +130,7 @@ Like this:
 
 ## How do these look like
 Linux+xterm+tmux
-![Screenshot from 4 games in tmux](https://raw.githubusercontent.com/abakh/junk/master/screenshot.png)
+![Screenshot from 4 games in tmux](https://raw.githubusercontent.com/abakh/junk/master/newer_screenshot.png)
 
 Plan9
 ![Screenshot from the games in Plan9](https://raw.githubusercontent.com/abakh/junk/master/screenshot_plan9.png)
