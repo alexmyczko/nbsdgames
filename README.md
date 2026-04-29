@@ -99,35 +99,6 @@ Thanks to PDCurses they even work on DOS and every platform with SDL.
 
 They should theoretically work on OS/2 as well but I have not verified that yet.
 
-## Dependencies
-
-* git (optional)
-* POSIX make (optional)
-* A C compiler with C99 enabled 
-* The standard library
-* ncurses (libncurses5-dev if you are on debian-based distros)
-
-To install them all on debian-base :
-
-``` sh
-        sudo apt install git make gcc libncurses5-dev
-```
-## How to build
-
-1) Download the files
-2) Go to the sources directory
-3) Install
-
-Like this:
-
-``` sh
-        git clone https://github.com/abakh/nbsdgames
-        cd ./nbsdgames
-        make
-        sudo make install # or use the binaries already compiled
-```
-
-
 ## How do these look like
 Linux+xterm+tmux
 ![Screenshot from 4 games in tmux](https://raw.githubusercontent.com/abakh/junk/master/newer_screenshot.png)
