@@ -99,6 +99,10 @@ Thanks to PDCurses they even work on DOS and every platform with SDL.
 
 They should theoretically work on OS/2 as well but I have not verified that yet.
 
+## Things people made
+* Actually useful project, make more of these: [play games while your AI assistant works](https://github.com/sirluky/copilot-fun)
+* [A great docker container for billions of people who wanted to game on RouterOS](https://github.com/tikoci/cligames)
+* "100% useful": [A great script for all the people who wanted to play games on a BSD VM that boots in milliseconds](https://github.com/NetBSDfr/smolBSD/pull/50)
 ## How do these look like
 Linux+xterm+tmux
 ![Screenshot from 4 games in tmux](https://raw.githubusercontent.com/abakh/junk/master/newer_screenshot.png)
