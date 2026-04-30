@@ -51,7 +51,7 @@ Thanks to Elias Riedel Gårding, Zinjanthropus, Gürkan Myczko, Robert Clausecke
 They also gave back code and useful feedback.
 
 
-## How to compile
+## How to compile the latest version
 
 Have 
 
@@ -74,7 +74,7 @@ To install them all on debian-base :
 Like this:
 
 ``` sh
-        git clone https://github.com/abakh/nbsdgames
+        git clone --depth 1 https://github.com/abakh/nbsdgames
         cd ./nbsdgames
         make
         sudo make install # or use the binaries already compiled
