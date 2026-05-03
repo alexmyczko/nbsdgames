@@ -1,7 +1,6 @@
 # New BSD Games
-*You get bored when your AI agent is busy taking someone's job? <br/>
-  You want to game on your router because you paid for the whole CPU? <br/>
-  Your disk is so full and you want to delete those big and bloated NES roms? <br/>
+*You want to game on your router because you paid for the whole CPU? <br/>
+  Your disk is so full and you want to delete those big and heavy NES roms? <br/>
   You have a computing machine from 1980's  and you wonder how you can use it? <br/>
   You have Plan9 dual-booted with OpenBSD and have kept the OpenBSD just for gaming? <br/>
   You are a bored sysadmin with no work, and need to kill time looking busy with terminal?  <br/>
