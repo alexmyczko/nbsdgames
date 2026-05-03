@@ -1,11 +1,13 @@
 # New BSD Games
- *You have a computing machine from 1980's  and you wonder how you can use it? <br/>
-  You are a bored sysadmin with no work, and need to kill time looking busy with terminal?  <br/>
+*You get bored when your AI agent is busy taking someone's job? <br/>
+  You want to game on your router because you paid for the whole CPU? <br/>
+  Your disk is so full and you want to delete those big and bloated NES roms? <br/>
+  You have a computing machine from 1980's  and you wonder how you can use it? <br/>
   You have Plan9 dual-booted with OpenBSD and have kept the OpenBSD just for gaming? <br/>
+  You are a bored sysadmin with no work, and need to kill time looking busy with terminal?  <br/>
   You have to make a Reversi AI for your homework and you don't know where to copy it from? <br/>
   Your port of Linux to a fancy platform has no GUI, but you still want nice screenshots?<br/>
   You have been so excited about the bsdgames, but have grown tired of playing tetris, snake and robots for billions of times? <br/>
-  Are you feeling that betrayed you by bundling stuff like phantasia in a package you expected to contain GAMES?<br/>
   Did you come here thinking it is bsdgames?*<br/>
 
 **Don't worry** anymore as you've got nbsdgames now!
@@ -99,7 +101,7 @@ Thanks to PDCurses they even work on DOS and every platform with SDL.
 
 They should theoretically work on OS/2 as well but I have not verified that yet.
 
-## Things people made
+## Fan projects
 * Actually useful project, make more of these: [play games while your AI assistant works](https://github.com/sirluky/copilot-fun)
 * [A great docker container for billions of people who wanted to game on RouterOS](https://github.com/tikoci/cligames)
 * "100% useful": [A great script for all the people who wanted to play games on a BSD VM that boots in milliseconds](https://github.com/NetBSDfr/smolBSD/pull/50)
