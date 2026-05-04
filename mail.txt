@@ -8,7 +8,7 @@ Here are some reasons for doing so (arguably it is more important than the impor
 
 * It is something exotic that Windows doesn't have and your users can show their not-techy-yet friends to evoke their interest.
 
-* The games are liked by European scientists! Look at the contributers.
+* The games are liked by European scientists! Look at the contributers and you will find a significant portion.
 
 * Its cost is a fraction of a megabyte, less than a wallpaper, its benefit is many hours of positive user experience for many people who try your distro.
 
