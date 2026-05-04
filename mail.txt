@@ -2,11 +2,13 @@ First of all, thanks for reading and sorry if this email reaches you multiple ti
 
 Here are some reasons for doing so (arguably it is more important than the important calculator app you probably already include) along with answers to common questions that might arise:
 
-* The way any user would feel about any product including your OS, is very dependent on the first impression it makes. Technical problems and learning curves are also very common. If you include games in your OS, their first impression would be "dozens of cool stuff, followed by one or two problems" however if you don't include games the first impression would be almost entirely made of the problems and difficulties they would face and they would not like and talk positively about your OS (similar to the way many people feel about vim because they couldn't manage to exit it the first time)
-
 * These are good brain exercise (which is one of the most important and beneficial kinds of exercise) also good for keeping focus when listening to something or thinking (you can look up the psychological concepts of Arousal and stimming).
 
+* The way any user would feel about any product including your OS, is very dependent on the first impression it makes. Technical problems and learning curves are also very common. If you include games in your OS, their first impression would be "dozens of cool stuff, followed by one or two problems" however if you don't include games the first impression would be almost entirely made of the problems and difficulties they would face and they would not like and talk positively about your OS (similar to the way many people feel about vim because they couldn't manage to exit it the first time)
+
 * It is something exotic that Windows doesn't have and your users can show their not-techy-yet friends to evoke their interest.
+
+* The games are liked by European scientists! Look at the contributers.
 
 * Its cost is a fraction of a megabyte, less than a wallpaper, its benefit is many hours of positive user experience for many people who try your distro.
 
