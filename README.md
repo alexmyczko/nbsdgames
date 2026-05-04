@@ -1,5 +1,5 @@
 # New BSD Games
-*You are a European scientist?
+*You are a European scientist? <br/>
   You want to game on your router because you paid for the whole CPU? <br/>
   Your disk is so full and you want to delete those big and heavy NES roms? <br/>
   You have a computing machine from 1980's  and you wonder how you can use it? <br/>
