@@ -1,6 +1,5 @@
 # New BSD Games
-*You are a European scientist? <br/>
-  You want to game on your router because you paid for the whole CPU? <br/>
+*You want to game on your router because you paid for the whole CPU? <br/>
   Your disk is so full and you want to delete those big and heavy NES roms? <br/>
   You have a computing machine from 1980's  and you wonder how you can use it? <br/>
   You have Plan9 dual-booted with OpenBSD and have kept the OpenBSD just for gaming? <br/>
@@ -8,7 +7,8 @@
   You have to make a Reversi AI for your homework and you don't know where to copy it from? <br/>
   Your port of Linux to a fancy platform has no GUI, but you still want nice screenshots?<br/>
   You have been so excited about the bsdgames, but have grown tired of playing tetris, snake and robots for billions of times? <br/>
-  Did you come here thinking it is bsdgames?*<br/>
+  Did you come here thinking it is bsdgames? <br/>
+  You are a European scientist? <br/>
 
 **Don't worry** anymore as you've got nbsdgames now!
 
