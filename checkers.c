@@ -598,6 +598,13 @@ int main(int argc,char** argv){
 	double adv = 1;//used to determine when the game is a draw
 	double previousadv =1;	
 	Turn:
+	if(side[0]=='c' &&side[1]=='c'){//make AI vs AI games more variable and interesting
+		fixed_starting_depth=1;
+		depth=4+(rand()%2);
+		py=px=9;//visual nuisance removed
+	}
+	
+	
 	curs_set(0);
 	jumpagainy=jumpagainx=-1;
 	kinged=0;
