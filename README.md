@@ -1,5 +1,6 @@
 # New BSD Games
-  *You want to game on your router because you paid for the whole CPU? <br/>
+  *Big programs wear out your precious, expensive SSD? <br/> 
+  You want to game on your router because you paid for the whole CPU? <br/>
   Your disk is so full and you want to delete those big and heavy NES roms? <br/>
   You have a computing machine from 1980's  and you wonder how you can use it? <br/>
   You have Plan9 dual-booted with OpenBSD and have kept the OpenBSD just for gaming? <br/>
@@ -87,7 +88,7 @@ Like this:
 It's on almost every repo by now: Debian (and other DEBs), OpenSUSE (and other RPMs), AUR, Alpine, FreeBSD, NetBSD, DragonflyBSD, Minix, Homebrew (MacOSX) and more 
 https://repology.org/project/nbsdgames/versions
 
-Thanks to Elias Riedel Gårding, Zinjanthropus, Gürkan Myczko, Robert Clausecker, Sam James, and so many other nice people for packaging.
+Thanks to Elias Riedel Gårding, Zinjanthropus, Alex Myczko, Robert Clausecker, Sam James, and so many other nice people for packaging.
 
 They also gave back code and useful feedback.
 
@@ -121,7 +122,7 @@ Windows
 * Tell me your feature requests, bug reports, etc.
 * Tell me the games you want to be added (but in the same genre, I can't port Angry Birds to curses! :)
 * Make a package for your distro (or put it on repos if the package is not there)
-* Tell distro developers to consider adding these as *default games*, read and send them the (mail.txt)[https://raw.githubusercontent.com/abakh/nbsdgames/refs/heads/master/mail.txt] text.
+* Tell distro developers to consider adding these as *default games*, read and send them the [mail.txt](https://raw.githubusercontent.com/abakh/nbsdgames/refs/heads/master/mail.txt) text.
 * Compile these with ASAN, play and find C-ish bugs.
 * Make a touch-friendly, minimal, mostly visually similar version using cairo and/or basic Qt components
 * Make a retroarch core (It would be easy to port PDCurses to retroarch)
