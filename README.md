@@ -1,13 +1,9 @@
 # New BSD Games
-  *Big programs wear out your precious, expensive SSD? <br/> 
-  You want to game on your router because you paid for the whole CPU? <br/>
-  Your disk is so full and you want to delete those big and heavy NES roms? <br/>
+  *You want to game on your router because you paid for the whole CPU? <br/>
   You have a computing machine from 1980's  and you wonder how you can use it? <br/>
   You have Plan9 dual-booted with OpenBSD and have kept the OpenBSD just for gaming? <br/>
   You are a bored sysadmin with no work, and need to kill time looking busy with terminal?  <br/>
   You have to make a Reversi AI for your homework and you don't know where to copy it from? <br/>
-  Your port of Linux to a fancy platform has no GUI, but you still want nice screenshots?<br/>
-  You have been so excited about the bsdgames, but have grown tired of playing tetris, snake and robots for billions of times? <br/>
   Did you come here thinking it is bsdgames? <br/>
   You are a European scientist? <br/>*
 
@@ -15,17 +11,17 @@
 
 The games include:
  
-* Jewels (A game with a gameplay kinda similiar to that of Tetris, NOT my invention)
+* Jewels 
 * Sudoku
-* Mines (Minesweeper)
+* Mines 
 * Reversi
 * Checkers
 * Battleship
 * SOS
-* Rabbithole (A maze-exploring game where you have to gather items from all around the maze rather than reaching an end, the idea maybe mine)
-* Pipes (Same as the famous Pipe Mania)
+* Rabbithole 
+* Pipes 
 * Fifteen
-* Memoblocks (or Memory blocks. A similar game was included in Windows 7)
+* Memoblocks 
 * Fisher
 * Muncher
 * Miketron
@@ -40,9 +36,6 @@ The games include:
 The difficulty and/or dimensions are adjustable through simple command line options, you can play a minesweeper game that take hours to complete, or exprience hexadecimal sudoku and 8x8 fifteen-like puzzles!
 
 *Or just enter "nbsdgames" at your terminal to get a fancy menu and play all sorts of games from there.*
-
- 
-Play on xterm for best experience.
 
 ## Packages
 
@@ -117,11 +110,13 @@ Windows
 ![Screenshot from the games in Windows 7](https://raw.githubusercontent.com/abakh/junk/master/screenshot_windows.jpg)
 
 ## How to contribute
-* Share these with your friends and others (including making YouTube videos of yourself playing, and telling every relevant youtuber and blogger to share these)
+* Share these with your friends and others 
 * Your stars make the repo more findable in Github :star:
 * Tell me your feature requests, bug reports, etc.
 * Tell me the games you want to be added (but in the same genre, I can't port Angry Birds to curses! :)
 * Make a package for your distro (or put it on repos if the package is not there)
+* Share videos of your playing on YouTube and elsewhere (this is precious feedback), and nicely asking relevant youtubers and bloggers to do so.
+<br/>
 * Tell distro developers to consider adding these as *default games*, read and send them the [mail.txt](https://raw.githubusercontent.com/abakh/nbsdgames/refs/heads/master/mail.txt) text.
 * Compile these with ASAN, play and find C-ish bugs.
 * Make a touch-friendly, minimal, mostly visually similar version using cairo and/or basic Qt components
