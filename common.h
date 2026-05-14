@@ -38,8 +38,7 @@ byte score_write(const char* path, long wscore, byte save_to_num){// only saves 
 	char name_buff[save_to_num_][60];
 	long score_buff[save_to_num_];
     char tmp_path[MAXPATHSIZE + 8] = {0};
-    strcpy(tmp_path, path);
-    strcat(tmp_path, ".XXXXXX");
+    snprintf(tmp_path, sizeof(tmp_path), "%s.XXXXXX", path);
 
 	memset(name_buff,0,save_to_num_*60*sizeof(char) );
 	memset(score_buff,0,save_to_num_*sizeof(long) );
@@ -49,7 +48,7 @@ byte score_write(const char* path, long wscore, byte save_to_num){// only saves 
 	byte location=0;
 
 	while( fscanf(score_file,"%59s : %ld\n",scanned_name,&scanned_score) == 2 && location<save_to_num){
-		strcpy(name_buff[location],scanned_name);
+		snprintf(name_buff[location],60,"%s",scanned_name);
 		score_buff[location] = scanned_score;
 		++location;//so it doesn't save more scores than intented
 
