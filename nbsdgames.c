@@ -44,6 +44,7 @@ int usleep(long usec) {
 chtype colors[4]={A_NORMAL,A_STANDOUT};
 char main_menu[]={
 	"See High Scores\n"
+	"See help pages\n"
 	NB"fisher\n"
 	NB"darrt\n"
 	NB"miketron\n"
@@ -95,6 +96,14 @@ char scores_menu[]={
 	"tugow_scores\n"
 	"revenge_scores\n"
 	"sjump_scores\n"
+};
+char help_page[]={
+	"Enter any game you want, then press '?'\n"
+	"or '!' to see the Controls and Gameplay \n"
+        "for that game.\n"
+        "Press 'q' to exit any game or menu.\n"
+	"You can see the command line options for any game\n"
+	"this way: checkers -h\n"
 };
 char choice_str[100]={0};
 char name[100]={0};
@@ -367,6 +376,9 @@ int main(int argc,char** argv){
 			break;
 			case 0:
 				scores();
+			break;
+			case 1:
+				menu(help_page,"How to read help pages");
 			break;
 			default:
 				def_prog_mode();

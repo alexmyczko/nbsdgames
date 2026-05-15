@@ -2,17 +2,17 @@ First of all, thanks for reading and sorry if this email reaches you multiple ti
 
 Here are some reasons for doing so (arguably it is more important than the important calculator app you probably already include) along with answers to common questions that might arise:
 
-* These are good brain exercise (which is one of the most important and beneficial kinds of exercise) also good for keeping focus when listening to something or thinking (you can look up the psychological concepts of Arousal and stimming).
+* These are good brain exercise (which is one of the most important and beneficial kinds of exercise) also good for keeping focus when listening to something or thinking (you can look up the psychological concepts of arousal and stimming).
 
-* The way any user would feel about any product including your OS, is very dependent on the first impression it makes. Technical problems and learning curves are also very common. If you include games in your OS, their first impression would be "dozens of cool stuff, followed by one or two problems" however if you don't include games the first impression would be almost entirely made of the problems and difficulties they would face and they would not like and talk positively about your OS (similar to the way many people feel about vim because they couldn't manage to exit it the first time)
+* The way any user would feel about any product including your OS, is very dependent on the first impression it makes. Technical problems, skill issues and learning curves are also very common, even if your distro is one of the easier ones. If you include games in your OS, their first impression would be "dozens of cool stuff, followed by one or two problems" however if you don't include games the first impression would be almost entirely made of the problems and difficulties they would face and they would not like and talk positively about your OS (similar to the way many people feel about vim because they couldn't manage to exit it the first time)
 
 * It is something exotic that Windows doesn't have and your users can show their not-techy-yet friends to evoke their interest.
 
-* The games are liked by European scientists! Look at the contributers and you will find a significant portion.
+* The games are liked by European scientists!  
 
 * Its cost is a fraction of a megabyte, less than a wallpaper, its benefit is many hours of positive user experience for many people who try your distro.
 
-* I have seen a lot of users (including programmers) avoid Linux because they fear the command-line, and they don't learn the command-line because they don't begin to use it. Terminal games make them begin to use the Terminal and make the impression that the Terminal is cool, easy and usable.
+* I have seen a lot of users (including programmers) avoid getting deep into Linux because they fear the command-line, and they don't learn the command-line because they don't begin to use it. Terminal games make them begin to use the Terminal and make the impression that the Terminal is cool, easy and usable.
 
 * A lot of users try OSes on VMs. A lot of people dual-boot OSes with Windows. I have seen that default games give them motivation to boot the OS more than once, play the games and also see and try other things there.
 
@@ -47,3 +47,5 @@ FAQ:
 - The cute little nbsdgames could be a good friend for them. It also has much less size and far more varied gameplay and more colorful looks than the default games I have seen anywhere. It is also important to note that games are there to entertain people, and some packages aren't good at the purpose they should serve. For example they include very few games with very repetitive gameplay that are not interesting for more than minutes, not being "easy to learn and hard to master". For instance I like sgt-puzzles because the package is open-source however it is too gray and entirely slow-paced and I couldn't figure out how to play most of them back when I was bored enough to try them out. However nbsdgames has fast-paced games, slow-paced games, easy games, hard games, puzzle games, focus games, so on. When you get tired of one game you can play all the others.
 
 I hope you realize that I make this points because it is a good package not because it is my package (same applies to the person who sent you this text). I did it because I thought it is a good thing to do and it seems that it is so. If you decide to poll your community, it would be good to show them this text too, so they know what they are talking about.
+
+Thanks for reading. I wish you continued success and good reasoning.
